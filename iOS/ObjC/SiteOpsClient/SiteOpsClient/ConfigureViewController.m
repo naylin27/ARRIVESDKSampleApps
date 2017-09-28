@@ -10,7 +10,7 @@
 #import "SiteOpsExtras.h"
 
 
-@interface ConfigureViewController ()
+@interface ConfigureViewController () <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *siteIdentifierTextField;
 @property (strong, nonatomic) IBOutlet UITextField *trackingIdentifierTextField;
@@ -24,6 +24,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _startUpdatesButton.layer.cornerRadius = 4.0;
+    _siteIdentifierTextField.delegate = self;
+    _trackingIdentifierTextField.delegate = self;
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
+    [self.view addGestureRecognizer:tapGesture];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,6 +56,26 @@
     [userDefaults synchronize];
     
     [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (void)dismissKeyboard:(UITapGestureRecognizer *)gesture
+{
+    [self.view endEditing:YES];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == _trackingIdentifierTextField) {
+        [_siteIdentifierTextField becomeFirstResponder];
+    } else if (textField == _siteIdentifierTextField) {
+        [self dismissKeyboard:nil];
+        [self startUpdates:nil];
+    } else {
+        [self dismissKeyboard:nil];
+    }
+    return YES;
 }
 
 @end
