@@ -1,0 +1,11 @@
+1.0-3
+* Shows all Open Trips
+* Support End/Cancel a specific trackToken
+* Support showing trackTokens for a given trackingIdentifier.
+
+1.0-2
+* Support End/Cancel Trip
+
+1.0-1
+
+- First Cut.
