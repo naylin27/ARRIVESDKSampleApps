@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CSMobileSessionDelegate {
         let sdkSession = CSMobileSession.createSession(withUsageToken: "YOUR_USAGE_TOKEN", delegate: self)
         
         // Call sessions method application:didFinishLaunchingWithOptions:
-        sdkSession?.application(UIApplication.shared, didFinishLaunchingWithOptions: nil)
+        sdkSession.application(UIApplication.shared, didFinishLaunchingWithOptions: nil)
         
         // Request always authorization
         locationManager.requestAlwaysAuthorization()
@@ -33,14 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CSMobileSessionDelegate {
     
     // MARK: - CSMobileSessionDelegate
 
-    func session(_ session: CSSession!, changedState newState: CSSessionState) {
+    func session(_ session: CSSession, changedState newState: CSSessionState) {
         if newState == .valid {
             NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: kSessionValidatedNotificationName), object: nil)
         }
         print("Session changed state to: \(newState.rawValue)")
     }
     
-    func session(_ session: CSMobileSession!, canNotifyAssociateAt site: CSSite!) {
+    func session(_ session: CSMobileSession, canNotifyAssociateAt site: CSSite) {
         print("Session can notify associate at: \(site.siteIdentifier)")
     }
     

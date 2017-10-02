@@ -118,28 +118,26 @@ class ViewController: UIViewController, CSTrackerDelegate {
 
     // MARK: - CSTrackerDelegate
     
-    func tracker(_ tracker: CSTracker!, userArrivedAt site: CSUserSite!) {
+    func tracker(_ tracker: CSTracker, userArrivedAt site: CSUserSite) {
         guard let trackingIdentifier = CSMobileSession.current().trackingIdentifier else { return }
         statusLabel.text = "\(trackingIdentifier) arrived at site \(site.siteIdentifier)"
-        
     }
     
-    func tracker(_ tracker: CSTracker!, userApproachingSite site: CSUserSite!) {
+    func tracker(_ tracker: CSTracker, userApproachingSite site: CSUserSite) {
         guard let trackingIdentifier = CSMobileSession.current().trackingIdentifier else { return }
         statusLabel.text = "\(trackingIdentifier) approaching at site \(site.siteIdentifier)"
     }
     
-    func tracker(_ tracker: CSTracker!, encounteredError error: Error!, forOperation trackerAction: CSTrackerAction) {
-        guard let error = error as NSError?,
-        let userInfo = error.userInfo as? [String : Any] else { return }
+    func tracker(_ tracker: CSTracker, encounteredError error: Error, forOperation trackerAction: CSTrackerAction) {
+        guard let error = (error as NSError?),
+            let userInfo = error.userInfo as? [String : Any] else { return }
         
         errorTitleLabel.text = userInfo[NSLocalizedDescriptionKey] as? String
         errorDescriptionLabel.text = userInfo[NSLocalizedFailureReasonErrorKey] as? String
         errorSolutionLabel.text = userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String
     }
     
-    func tracker(_ tracker: CSTracker!, updatedTrackedSites trackedSites: Set<AnyHashable>!) {
-        guard let trackedSites = trackedSites as? Set<CSUserSite> else { return }
+    func tracker(_ tracker: CSTracker, updatedTrackedSites trackedSites: Set<CSUserSite>) {
         // We will just show the first one for now. It is in dispatch_async because we are making changes in the UI
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
@@ -148,7 +146,7 @@ class ViewController: UIViewController, CSTrackerDelegate {
             } else {
                 let site = trackedSites.first!
                 strongSelf.siteIdentierField.text = site.siteIdentifier
-                if site.trackTokens != nil, let firstTrackToken = site.trackTokens.first as? String {
+                if site.trackTokens != nil, let firstTrackToken = site.trackTokens?.first {
                     strongSelf.trackTokenField.text = firstTrackToken
                 } else {
                     strongSelf.trackTokenField.text = ""
