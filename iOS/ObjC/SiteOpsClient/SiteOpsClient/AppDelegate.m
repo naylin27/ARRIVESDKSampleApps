@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 #warning Replace with a valid API Key and Secret generated from your Curbside ARRIVE platform
 
-    CSSiteOpsSession *sdksession = [CSSiteOpsSession createSessionWithAPIKey:@"API_KEY" secret:@"API_SECRET" delegate:self];
+    CSSiteOpsSession *sdksession = [CSSiteOpsSession createSessionWithAPIKey:@"YOUR_API_KEY" secret:@"YOUR_SECRET_KEY" delegate:self];
     
     // Call sessions method application:didFinishLaunchingWithOptions:
     [sdksession application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil];
