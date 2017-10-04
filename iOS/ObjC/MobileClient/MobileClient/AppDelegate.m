@@ -24,7 +24,7 @@
         [_locationManager requestAlwaysAuthorization];
     
     // Mobile Clients
-    CSMobileSession *sdksession = [CSMobileSession createSessionWithUsageToken:@"ENTER_VALID_USAGE_TOKEN" delegate:self];
+    CSMobileSession *sdksession = [CSMobileSession createSessionWithUsageToken:@"YOUR_USAGE_TOKEN" delegate:self];
     
     // Call sessions method application:didFinishLaunchingWithOptions:
     [sdksession application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil];
