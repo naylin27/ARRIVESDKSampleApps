@@ -36,8 +36,7 @@ doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without
 
 ## View user trip
 * Check ARRIVE dashboard to see your current location and your status change from in-transit to arrived.
-* Visit https://control.curbside.com to get an overview of all your sites and trips or download the SiteOps app to view trips from one of your sites.
-
+* Visit https://control.curbside.com to get an overview of all your sites and trips.
 ## Quickstart
 Refer to [Quickstart](https://developer.curbside.com/docs/getting-started/quickstart-android/) to integrate ARRIVE into an existing.
 
