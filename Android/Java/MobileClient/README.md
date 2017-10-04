@@ -16,7 +16,7 @@ Register for an account at [ARRIVE dashboard](https://control.curbside.com) and 
 * Open the project in the Android Studio. 
 * [Download](https://developer.curbside.com/downloads/) the ARRIVE Android SDK.
 * Add the dowloaded aar file in your libs folder.
-* Add the dependencies in the gradle file. Please refer to [QuickStart Documentation](https://developer.curbside.com/docs/getting-started/quickstart-android/) for detailed information on how to integrate sdk with your app.
+* Add the dependencies in the gradle file. Please refer to [QuickStart Documentation](https://developer.curbside.com/docs/getting-started/quickstart-android-transmit-app/) for detailed information on how to integrate sdk with your app.
 * Compile the app. It should compile successfully.
 
 ## Running
@@ -39,7 +39,7 @@ Register for an account at [ARRIVE dashboard](https://control.curbside.com) and 
 * Visit [ARRIVE dashboard](https://control.curbside.com) to get an overview of all your sites and trips.
 
 ## Quickstart
-Refer to [Quickstart](https://developer.curbside.com/docs/getting-started/quickstart-android/) to integrate ARRIVE into an existing project.
+Refer to [Quickstart](https://developer.curbside.com/docs/getting-started/quickstart-android-transmit-app/) to integrate ARRIVE into an existing project.
 
 ## Android SDK Reference Docs
 https://developer.curbside.com/docs/reference/android/index.html
