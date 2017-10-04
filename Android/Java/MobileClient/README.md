@@ -5,15 +5,15 @@ doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without
 
 ### Prerequisites
 
-* Register for an account at https://control.curbside.com and log into ARRIVE dashboard. Do the following:
+Register for an account at [ARRIVE dashboard](https://control.curbside.com) and log into ARRIVE dashboard. Do the following:
 * Generate usage token
 * Create a site
 * Register an App ID for Mobile app
 
 ### Installing
 
-* Please download [Android Studio](https://developer.android.com/studio/index.html) and install it on your machine
-* Open the project in the Android Studio 
+* Please download [Android Studio](https://developer.android.com/studio/index.html) and install it on your machine.
+* Open the project in the Android Studio. 
 * [Download](https://developer.curbside.com/downloads/) the ARRIVE Android SDK.
 * Add the dowloaded aar file in your libs folder.
 * Add the dependencies in the gradle file. Please refer to [QuickStart Documentation](https://developer.curbside.com/docs/getting-started/quickstart-android/) for detailed information on how to integrate sdk with your app.
@@ -35,10 +35,11 @@ doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without
 * Once you are near the site, you can also notify associate by tapping "Notify Associate".
 
 ## View user trip
-* Check ARRIVE dashboard to see your current location and your status change from in-transit to arrived.
-* Visit https://control.curbside.com to get an overview of all your sites and trips.
+* Check [ARRIVE dashboard](https://control.curbside.com) to see your current location and your status change from in-transit to arrived.
+* Visit [ARRIVE dashboard](https://control.curbside.com) to get an overview of all your sites and trips.
+
 ## Quickstart
-Refer to [Quickstart](https://developer.curbside.com/docs/getting-started/quickstart-android/) to integrate ARRIVE into an existing.
+Refer to [Quickstart](https://developer.curbside.com/docs/getting-started/quickstart-android/) to integrate ARRIVE into an existing project.
 
 ## Android SDK Reference Docs
 https://developer.curbside.com/docs/reference/android/index.html
