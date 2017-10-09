@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.shopcurbside.curbsidesdk.CSErrorCode;
-import com.shopcurbside.curbsidesdk.CSMobileSession;
 import com.shopcurbside.curbsidesdk.CSSite;
+import com.shopcurbside.curbsidesdk.CSUserSession;
 import com.shopcurbside.curbsidesdk.credentialprovider.TokenCurbsideCredentialProvider;
 import com.shopcurbside.curbsidesdk.event.Event;
 import com.shopcurbside.curbsidesdk.event.Path;
@@ -23,15 +23,13 @@ import com.shopcurbside.curbsidesdk.event.Status;
 import com.shopcurbside.curbsidesdk.event.Type;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 import rx.functions.Action1;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
-    private static String USAGE_TOKEN = "YOUR_USAGE_TOKEN";
+    private static String USAGE_TOKEN = "YOUR-USAGE-TOKEN";
 
     private static final int PERMISSION_REQUEST_CODE = 1;
 
@@ -43,9 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText etSiteIdentifier = null;
 
     private Button bRegisterTrackingId = null;
-    private Button bStartTrackingSite = null;
-    private Button bStopTrackingSite = null;
-    private Button bNotifyAssociate = null;
+    private Button bStartTrip = null;
+    private Button bCompleteTrip = null;
+    private Button bNotifyMonitoringSessionUser = null;
     private Button bUnregisterTrackingId = null;
 
     private TextView tvLabel = null;
@@ -69,17 +67,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bRegisterTrackingId = (Button) findViewById(R.id.bRegisterTrackingId);
         bRegisterTrackingId.setOnClickListener(this);
 
-        bStartTrackingSite = (Button) findViewById(R.id.bStartTrackingSite);
-        bStartTrackingSite.setAlpha(ALPHA);
-        bStartTrackingSite.setOnClickListener(this);
+        bStartTrip = (Button) findViewById(R.id.bStartTrip);
+        bStartTrip.setAlpha(ALPHA);
+        bStartTrip.setOnClickListener(this);
 
-        bStopTrackingSite = (Button) findViewById(R.id.bStopTrackingSite);
-        bStopTrackingSite.setAlpha(ALPHA);
-        bStopTrackingSite.setOnClickListener(this);
+        bCompleteTrip = (Button) findViewById(R.id.bCompleteTrip);
+        bCompleteTrip.setAlpha(ALPHA);
+        bCompleteTrip.setOnClickListener(this);
 
-        bNotifyAssociate = (Button) findViewById(R.id.bNotifyAssociate);
-        bNotifyAssociate.setAlpha(ALPHA);
-        bNotifyAssociate.setOnClickListener(this);
+        bNotifyMonitoringSessionUser = (Button) findViewById(R.id.bNotifyMonitoringSessionUser);
+        bNotifyMonitoringSessionUser.setAlpha(ALPHA);
+        bNotifyMonitoringSessionUser.setOnClickListener(this);
 
         bUnregisterTrackingId = (Button) findViewById(R.id.bUnregisterTrackingId);
         bUnregisterTrackingId.setAlpha(ALPHA);
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkLocationPermissions();
 
         //Initialize CSMobileSession
-        CSMobileSession.init(this /*context*/, new TokenCurbsideCredentialProvider(USAGE_TOKEN));
+        CSUserSession.init(this /*context*/, new TokenCurbsideCredentialProvider(USAGE_TOKEN));
     }
 
     private void checkLocationPermissions() {
@@ -137,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             tvLabel.setText(String.format("Successfully registered tracking id"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
-                            bStartTrackingSite.setEnabled(true);
-                            bStartTrackingSite.setAlpha(NO_ALPHA);
+                            bStartTrip.setEnabled(true);
+                            bStartTrip.setAlpha(NO_ALPHA);
 
                             bUnregisterTrackingId.setEnabled(true);
                             bUnregisterTrackingId.setAlpha(NO_ALPHA);
@@ -155,18 +153,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSMobileSession
+                CSUserSession
                         .getInstance()
                         .getEventBus()
                         .getObservable(Path.USER, Type.REGISTER_TRACKING_ID)
                         .subscribe(registerTrackingIdEventObserver);
 
                 //register tracking id
-                CSMobileSession.getInstance().registerTrackingIdentifier(trackingIdentifier);
+                CSUserSession.getInstance().registerTrackingIdentifier(trackingIdentifier);
 
                 break;
 
-            case R.id.bStartTrackingSite:
+            case R.id.bStartTrip:
                 trackToken = etTrackToken.getText().toString();
                 if(trackToken == null || trackToken.isEmpty()) {
                     tvLabel.setText("Please enter track token");
@@ -182,22 +180,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 //create the observer for listening start tracking site event
-                final Action1<Event> startTrackingSiteEventObserver = new Action1<com.shopcurbside.curbsidesdk.event.Event>() {
+                final Action1<Event> startTrackingSiteEventObserver = new Action1<Event>() {
                     @Override
-                    public void call(com.shopcurbside.curbsidesdk.event.Event event) {
+                    public void call(Event event) {
                         if(event.status == Status.SUCCESS) {
-                            tvLabel.setText(String.format("Successfully started tracking site"));
+                            tvLabel.setText(String.format("Successfully started trip"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            bStopTrackingSite.setEnabled(true);
-                            bStopTrackingSite.setAlpha(NO_ALPHA);
+                            bCompleteTrip.setEnabled(true);
+                            bCompleteTrip.setAlpha(NO_ALPHA);
 
-                            bStartTrackingSite.setEnabled(false);
-                            bStartTrackingSite.setAlpha(ALPHA);
+                            bStartTrip.setEnabled(false);
+                            bStartTrip.setAlpha(ALPHA);
 
                             createObserverToCheckIfCanNotifyAssociate();
                         }
                         else if (event.status == Status.FAILURE) {
-                            tvLabel.setText(String.format("Failure in start track due to: %s", (CSErrorCode)event.object));
+                            tvLabel.setText(String.format("Failure in start trip due to: %s", (CSErrorCode)event.object));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorRed));
                         }
 
@@ -206,39 +204,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSMobileSession.getInstance().getEventBus().getObservable(Path.USER, Type.START_TRACKING).subscribe(startTrackingSiteEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.START_TRIP).subscribe(startTrackingSiteEventObserver);
 
                 //start tracking the site
-                final List<String> tokens = Arrays.asList(trackToken);
-                final CSSite site = new CSSite(siteIdentifier, tokens);
-                CSMobileSession.getInstance().startTrackingSite(site);
+                CSUserSession.getInstance().startTripToSiteWithIdentifier(siteIdentifier, trackToken);
 
                 break;
 
-            case R.id.bStopTrackingSite:
+            case R.id.bCompleteTrip:
 
                 //create an observer for listening stop tracking site event
-                final Action1<Event> stopTrackingSiteEventObserver = new Action1<com.shopcurbside.curbsidesdk.event.Event>() {
+                final Action1<Event> completeTripSiteEventObserver = new Action1<Event>() {
                     @Override
-                    public void call(com.shopcurbside.curbsidesdk.event.Event event) {
+                    public void call(Event event) {
                         if(event.status == Status.SUCCESS) {
                             //Cannot start tracking on track token on which stop/cancel track was called
-                            tvLabel.setText(String.format("Successfully stopped tracking site."));
+                            tvLabel.setText(String.format("Successfully complete trip"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
-                            bNotifyAssociate.setEnabled(false);
-                            bNotifyAssociate.setAlpha(ALPHA);
+                            bNotifyMonitoringSessionUser.setEnabled(false);
+                            bNotifyMonitoringSessionUser.setAlpha(ALPHA);
 
-                            bStopTrackingSite.setEnabled(false);
-                            bStopTrackingSite.setAlpha(ALPHA);
+                            bCompleteTrip.setEnabled(false);
+                            bCompleteTrip.setAlpha(ALPHA);
 
-                            bStartTrackingSite.setEnabled(true);
-                            bStartTrackingSite.setAlpha(NO_ALPHA);
+                            bStartTrip.setEnabled(true);
+                            bStartTrip.setAlpha(NO_ALPHA);
 
                             showAlertDialogBox();
                         }
                         else if (event.status == Status.FAILURE) {
-                            tvLabel.setText(String.format("Failure in stop tracking site due to: %s", (CSErrorCode)event.object));
+                            tvLabel.setText(String.format("Failure in complete trip due to: %s", (CSErrorCode)event.object));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorRed));
                         }
 
@@ -247,25 +243,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSMobileSession.getInstance().getEventBus().getObservable(Path.USER, Type.STOP_TRACKING).subscribe(stopTrackingSiteEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.COMPLETE_TRIP).subscribe(completeTripSiteEventObserver);
 
                 //stop tracking site
-                CSMobileSession.getInstance().stopTrackingSite(new CSSite(siteIdentifier));
+                CSUserSession.getInstance().completeTripToSiteWithIdentifier(siteIdentifier, null /*track token*/);
 
                 break;
 
-            case R.id.bNotifyAssociate:
+            case R.id.bNotifyMonitoringSessionUser:
 
-                //create an observer for listening notify associate event
-                final Action1<Event> notifyAssociateEventObserver = new Action1<com.shopcurbside.curbsidesdk.event.Event>() {
+                //create an observer for listening monitoring user event
+                final Action1<Event> notifyAssociateEventObserver = new Action1<Event>() {
                     @Override
-                    public void call(com.shopcurbside.curbsidesdk.event.Event event) {
+                    public void call(Event event) {
                         if(event.status == Status.SUCCESS) {
-                            tvLabel.setText(String.format("Successfully notified associate"));
+                            tvLabel.setText(String.format("Successfully notified monitoring user"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                         }
                         else if (event.status == Status.FAILURE) {
-                            tvLabel.setText(String.format("Failure in notifying associate due to: %s", (CSErrorCode)event.object));
+                            tvLabel.setText(String.format("Failure in notifying monitoring session user due to: %s", (CSErrorCode)event.object));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorRed));
                         }
 
@@ -274,18 +270,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSMobileSession.getInstance().getEventBus().getObservable(Path.USER, Type.NOTIFY_ASSOCIATE).subscribe(notifyAssociateEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.NOTIFY_ASSOCIATE).subscribe(notifyAssociateEventObserver);
 
                 //notifyAssociate
-                CSMobileSession.getInstance().getNotifyAssociateManager().notifyAssociate(trackingIdentifier, siteIdentifierToNotifyAssociate);
+                CSUserSession.getInstance().notifyMonitoringSessionUserOfArrivalAtSite(new CSSite(siteIdentifierToNotifyAssociate));
                 break;
 
             case R.id.bUnregisterTrackingId:
 
                 //create an observer for listening unregister tracking id event
-                final Action1<Event> unregisterTrackingIdEventObserver = new Action1<com.shopcurbside.curbsidesdk.event.Event>() {
+                final Action1<Event> unregisterTrackingIdEventObserver = new Action1<Event>() {
                     @Override
-                    public void call(com.shopcurbside.curbsidesdk.event.Event event) {
+                    public void call(Event event) {
                         if(event.status == Status.SUCCESS) {
                             tvLabel.setText(String.format("Successfully unregistered tracking id"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -301,10 +297,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSMobileSession.getInstance().getEventBus().getObservable(Path.USER, Type.UNREGISTER_TRACKING_ID).subscribe(unregisterTrackingIdEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.UNREGISTER_TRACKING_ID).subscribe(unregisterTrackingIdEventObserver);
 
                 //notifyAssociate
-                CSMobileSession.getInstance().unregisterTrackingIdentifier();
+                CSUserSession.getInstance().unregisterTrackingIdentifier();
                 break;
         }
     }
@@ -312,8 +308,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showAlertDialogBox() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Stop Tracking Successful")
-                .setMessage("Do Not forget to change value of track token before calling start track again. Cannot start tracking on track token on which stop/cancel track was called")
+                .setTitle("Trip Completed Sucessfully")
+                .setMessage("Do Not forget to change value of track token before calling start trip again. Cannot start trip on track token on which complete/cancel track was called")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialogInterface, final int id) {
@@ -332,28 +328,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bUnregisterTrackingId.setEnabled(false);
         bUnregisterTrackingId.setAlpha(ALPHA);
 
-        bStartTrackingSite.setEnabled(false);
-        bStartTrackingSite.setAlpha(ALPHA);
+        bStartTrip.setEnabled(false);
+        bStartTrip.setAlpha(ALPHA);
 
-        bStopTrackingSite.setEnabled(false);
-        bStopTrackingSite.setAlpha(ALPHA);
+        bCompleteTrip.setEnabled(false);
+        bCompleteTrip.setAlpha(ALPHA);
 
-        bNotifyAssociate.setEnabled(false);
-        bStopTrackingSite.setAlpha(ALPHA);
+        bNotifyMonitoringSessionUser.setEnabled(false);
+        bCompleteTrip.setAlpha(ALPHA);
     }
 
     private void createObserverToCheckIfCanNotifyAssociate() {
         //create an observer to observe if you are near to any site and can notify associate there
-        final Action1<com.shopcurbside.curbsidesdk.event.Event> canNotifyAssociateEventObserver = new Action1<com.shopcurbside.curbsidesdk.event.Event>() {
+        final Action1<Event> canNotifyAssociateEventObserver = new Action1<Event>() {
             @Override
             public void call(com.shopcurbside.curbsidesdk.event.Event event) {
                 if(event.status == Status.COMPLETED) {
-                    final Set<String> siteIds = CSMobileSession.getInstance().getSitesToNotifyOpsOfArrival();
+                    final Set<String> siteIds = CSUserSession.getInstance().getSitesToNotifyMonitoringSessionUserOfArrival();
                     if (siteIds.size() > 0) {
                         tvLabel.setText(String.format("Can Notify Associate Now!"));
                         tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                        bNotifyAssociate.setEnabled(true);
-                        bNotifyAssociate.setAlpha(NO_ALPHA);
+                        bNotifyMonitoringSessionUser.setEnabled(true);
+                        bNotifyMonitoringSessionUser.setAlpha(NO_ALPHA);
                         siteIdentifierToNotifyAssociate = siteIds.iterator().next();
                     } else {
                          tvLabel.setText("User still in transit to the site");
@@ -365,6 +361,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
         //subscribe to the event
-        CSMobileSession.getInstance().getEventBus().getObservable(Path.USER, Type.FETCH_TRACKING_INFO).subscribe(canNotifyAssociateEventObserver);
+        CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.FETCH_TRIP_INFO).subscribe(canNotifyAssociateEventObserver);
     }
 }
