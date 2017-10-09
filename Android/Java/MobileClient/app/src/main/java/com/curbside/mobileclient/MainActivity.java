@@ -179,8 +179,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
 
-                //create the observer for listening start tracking site event
-                final Action1<Event> startTrackingSiteEventObserver = new Action1<Event>() {
+                //create the observer for listening start trip event
+                final Action1<Event> startTripEventObserver = new Action1<Event>() {
                     @Override
                     public void call(Event event) {
                         if(event.status == Status.SUCCESS) {
@@ -204,22 +204,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.START_TRIP).subscribe(startTrackingSiteEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.START_TRIP).subscribe(startTripEventObserver);
 
-                //start tracking the site
+                //start trip
                 CSUserSession.getInstance().startTripToSiteWithIdentifier(siteIdentifier, trackToken);
 
                 break;
 
             case R.id.bCompleteTrip:
 
-                //create an observer for listening stop tracking site event
+                //create an observer for listening complete trip event
                 final Action1<Event> completeTripSiteEventObserver = new Action1<Event>() {
                     @Override
                     public void call(Event event) {
                         if(event.status == Status.SUCCESS) {
-                            //Cannot start tracking on track token on which stop/cancel track was called
-                            tvLabel.setText(String.format("Successfully complete trip"));
+                            //Cannot start trip on track token on which complete/cancel track was called
+                            tvLabel.setText(String.format("Successfully completed trip"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
                             bNotifyMonitoringSessionUser.setEnabled(false);
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //subscribe to the event on the eventBus
                 CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.COMPLETE_TRIP).subscribe(completeTripSiteEventObserver);
 
-                //stop tracking site
+                //complete trip
                 CSUserSession.getInstance().completeTripToSiteWithIdentifier(siteIdentifier, null /*track token*/);
 
                 break;
