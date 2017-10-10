@@ -28,11 +28,11 @@ Register for an account at [ARRIVE dashboard](https://control.curbside.com) and 
 * Enter track token
 * Enter site identifier that was created on ARRIVE dashboard
 * Tap "Register Tracking Id".
-* Once "Register Tracking Id" is successful, tap “Start Tracking Site”.
+* Once "Register Tracking Id" is successful, tap “Start Trip”.
 * Go on a test drive.
-* You can stop the trip by tapping "Stop Tracking". Note: For starting new trip, enter new track token, as once stop track is called on a track token, it cannnot be reused.
+* You can complete the trip by tapping "Complete Trip". Note: For starting new trip, enter new track token, as once complete trip is called on a track token, it cannot be reused.
 * You can also unregister you tracking Id by tapping "Unregister Tracking Id".
-* Once you are near the site, you can also notify associate by tapping "Notify Associate".
+* Once you are near the site, you can also notify monitoring user by tapping "Notify Monitoring Session User".
 
 ## View user trip
 * Check [ARRIVE dashboard](https://control.curbside.com) to see your current location and your status change from in-transit to arrived.

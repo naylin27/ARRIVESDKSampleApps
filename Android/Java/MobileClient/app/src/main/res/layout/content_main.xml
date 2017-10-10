@@ -58,7 +58,7 @@
         android:textColor="@color/colorWhite" />
 
     <Button
-        android:id="@+id/bStartTrackingSite"
+        android:id="@+id/bStartTrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -66,13 +66,13 @@
         android:elevation="4dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="Start Tracking Site"
+        android:text="Start Trip"
         android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
         android:enabled="false"/>
 
     <Button
-        android:id="@+id/bStopTrackingSite"
+        android:id="@+id/bCompleteTrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -80,13 +80,13 @@
         android:elevation="4dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="Stop Tracking Site"
+        android:text="Complete Trip"
         android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
         android:enabled="false"/>
 
     <Button
-        android:id="@+id/bNotifyAssociate"
+        android:id="@+id/bNotifyMonitoringSessionUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -94,7 +94,7 @@
         android:elevation="4dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="Notify Associate"
+        android:text="Notify Monitoring Session User"
         android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
         android:enabled="false"/>
