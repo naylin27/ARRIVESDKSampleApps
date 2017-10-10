@@ -13,14 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.shopcurbside.curbsidesdk.CSErrorCode;
-import com.shopcurbside.curbsidesdk.CSSite;
-import com.shopcurbside.curbsidesdk.CSUserSession;
-import com.shopcurbside.curbsidesdk.credentialprovider.TokenCurbsideCredentialProvider;
-import com.shopcurbside.curbsidesdk.event.Event;
-import com.shopcurbside.curbsidesdk.event.Path;
-import com.shopcurbside.curbsidesdk.event.Status;
-import com.shopcurbside.curbsidesdk.event.Type;
+import com.curbside.curbsidesdk.CSErrorCode;
+import com.curbside.curbsidesdk.CSSite;
+import com.curbside.curbsidesdk.CSUserSession;
+import com.curbside.curbsidesdk.credentialprovider.TokenCurbsideCredentialProvider;
+import com.curbside.curbsidesdk.event.Event;
+import com.curbside.curbsidesdk.event.Path;
+import com.curbside.curbsidesdk.event.Status;
+import com.curbside.curbsidesdk.event.Type;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 //create an observer for listening register tracking id events
-                final Action1<Event> registerTrackingIdEventObserver = new Action1<com.shopcurbside.curbsidesdk.event.Event>() {
+                final Action1<Event> registerTrackingIdEventObserver = new Action1<com.curbside.curbsidesdk.event.Event>() {
                     @Override
                     public void call(final Event event) {
                         if (event.status == Status.SUCCESS) {
@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //create an observer to observe if you are near to any site and can notify associate there
         final Action1<Event> canNotifyMonitoringUserAtSiteEventObserver = new Action1<Event>() {
             @Override
-            public void call(com.shopcurbside.curbsidesdk.event.Event event) {
+            public void call(com.curbside.curbsidesdk.event.Event event) {
                 if(event.status == Status.TRUE) {
                     final Set<String> siteIds = CSUserSession.getInstance().getSitesToNotifyMonitoringSessionUserOfArrival();
                     if (siteIds.size() > 0) {
