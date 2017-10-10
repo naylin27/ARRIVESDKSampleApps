@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.NOTIFY_ASSOCIATE).subscribe(notifyMonitoringSessionUserEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.NOTIFY_MONITORING_SESSION_USER).subscribe(notifyMonitoringSessionUserEventObserver);
 
                 //notify monitoring session user
                 CSUserSession.getInstance().notifyMonitoringSessionUserOfArrivalAtSite(new CSSite(siteIdentifierToNotifyMonitoringUser));
