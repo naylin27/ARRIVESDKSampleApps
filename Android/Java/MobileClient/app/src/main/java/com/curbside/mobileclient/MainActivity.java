@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String trackingIdentifier = null;
     private String trackToken = null;
     private String siteIdentifier = null;
-    private String siteIdentifierToNotifyAssociate = null;
+    private String siteIdentifierToNotifyMonitoringUser = null;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             bStartTrip.setEnabled(false);
                             bStartTrip.setAlpha(ALPHA);
 
-                            createObserverToCheckIfCanNotifyAssociate();
+                            createObserverToCheckIfCanNotifyMonitoringSessionUser();
                         }
                         else if (event.status == Status.FAILURE) {
                             tvLabel.setText(String.format("Failure in start trip due to: %s", (CSErrorCode)event.object));
@@ -243,17 +243,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.COMPLETE_TRIP).subscribe(completeTripSiteEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.CANCEL_TRIP).subscribe(completeTripSiteEventObserver);
 
                 //complete trip
-                CSUserSession.getInstance().completeTripToSiteWithIdentifier(siteIdentifier, null /*track token*/);
+                CSUserSession.getInstance().cancelTripToSiteWithIdentifier(siteIdentifier, null /*track token*/);
 
                 break;
 
             case R.id.bNotifyMonitoringSessionUser:
 
                 //create an observer for listening monitoring user event
-                final Action1<Event> notifyAssociateEventObserver = new Action1<Event>() {
+                final Action1<Event> notifyMonitoringSessionUserEventObserver = new Action1<Event>() {
                     @Override
                     public void call(Event event) {
                         if(event.status == Status.SUCCESS) {
@@ -270,10 +270,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.NOTIFY_ASSOCIATE).subscribe(notifyAssociateEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.NOTIFY_ASSOCIATE).subscribe(notifyMonitoringSessionUserEventObserver);
 
-                //notifyAssociate
-                CSUserSession.getInstance().notifyMonitoringSessionUserOfArrivalAtSite(new CSSite(siteIdentifierToNotifyAssociate));
+                //notify monitoring session user
+                CSUserSession.getInstance().notifyMonitoringSessionUserOfArrivalAtSite(new CSSite(siteIdentifierToNotifyMonitoringUser));
                 break;
 
             case R.id.bUnregisterTrackingId:
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //subscribe to the event on the eventBus
                 CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.UNREGISTER_TRACKING_ID).subscribe(unregisterTrackingIdEventObserver);
 
-                //notifyAssociate
+                //unregister tracking identifier
                 CSUserSession.getInstance().unregisterTrackingIdentifier();
                 break;
         }
@@ -338,19 +338,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bCompleteTrip.setAlpha(ALPHA);
     }
 
-    private void createObserverToCheckIfCanNotifyAssociate() {
+    private void createObserverToCheckIfCanNotifyMonitoringSessionUser() {
         //create an observer to observe if you are near to any site and can notify associate there
-        final Action1<Event> canNotifyAssociateEventObserver = new Action1<Event>() {
+        final Action1<Event> canNotifyMonitoringUserAtSiteEventObserver = new Action1<Event>() {
             @Override
             public void call(com.shopcurbside.curbsidesdk.event.Event event) {
-                if(event.status == Status.COMPLETED) {
+                if(event.status == Status.TRUE) {
                     final Set<String> siteIds = CSUserSession.getInstance().getSitesToNotifyMonitoringSessionUserOfArrival();
                     if (siteIds.size() > 0) {
-                        tvLabel.setText(String.format("Can Notify Associate Now!"));
+                        tvLabel.setText(String.format("Can Notify Monitoring Session User Now!"));
                         tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                         bNotifyMonitoringSessionUser.setEnabled(true);
                         bNotifyMonitoringSessionUser.setAlpha(NO_ALPHA);
-                        siteIdentifierToNotifyAssociate = siteIds.iterator().next();
+                        siteIdentifierToNotifyMonitoringUser = siteIds.iterator().next();
                     } else {
                          tvLabel.setText("User still in transit to the site");
                     }
@@ -361,6 +361,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
         //subscribe to the event
-        CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.FETCH_TRIP_INFO).subscribe(canNotifyAssociateEventObserver);
+        CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.CAN_NOTIFY_MONITORING_USER_AT_SITE).subscribe(canNotifyMonitoringUserAtSiteEventObserver);
     }
 }
