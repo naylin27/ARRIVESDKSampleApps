@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.curbside.sdk.CSErrorCode;
 import com.curbside.sdk.CSSite;
 import com.curbside.sdk.CSUserSession;
+import com.curbside.sdk.config.CSEnvironment;
 import com.curbside.sdk.credentialprovider.TokenCurbsideCredentialProvider;
 import com.curbside.sdk.event.Event;
 import com.curbside.sdk.event.Path;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         checkLocationPermissions();
 
-        //Initialize CSMobileSession
+        //Initialize CSUserSession
         CSUserSession.init(this /*context*/, new TokenCurbsideCredentialProvider(USAGE_TOKEN));
     }
 
