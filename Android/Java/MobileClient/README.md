@@ -30,7 +30,7 @@ Register for an account at [ARRIVE dashboard](https://control.curbside.com) and 
 * Tap "Register Tracking Id".
 * Once "Register Tracking Id" is successful, tap “Start Trip”.
 * Go on a test drive.
-* You can complete the trip by tapping "Complete Trip". Note: For starting new trip, enter new track token, as once complete trip is called on a track token, it cannot be reused.
+* You can cancel the trip by tapping "Cancel Trip". Note: For starting new trip, enter new track token, as once complete trip is called on a track token, it cannot be reused.
 * You can also unregister you tracking Id by tapping "Unregister Tracking Id".
 * Once you are near the site, you can also notify monitoring user by tapping "Notify Monitoring Session User".
 

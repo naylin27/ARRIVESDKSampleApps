@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button bRegisterTrackingId = null;
     private Button bStartTrip = null;
-    private Button bCompleteTrip = null;
+    private Button bCancelTrip = null;
     private Button bNotifyMonitoringSessionUser = null;
     private Button bUnregisterTrackingId = null;
 
@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bStartTrip.setAlpha(ALPHA);
         bStartTrip.setOnClickListener(this);
 
-        bCompleteTrip = (Button) findViewById(R.id.bCompleteTrip);
-        bCompleteTrip.setAlpha(ALPHA);
-        bCompleteTrip.setOnClickListener(this);
+        bCancelTrip = (Button) findViewById(R.id.bCancelTrip);
+        bCancelTrip.setAlpha(ALPHA);
+        bCancelTrip.setOnClickListener(this);
 
         bNotifyMonitoringSessionUser = (Button) findViewById(R.id.bNotifyMonitoringSessionUser);
         bNotifyMonitoringSessionUser.setAlpha(ALPHA);
@@ -186,8 +186,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if(event.status == Status.SUCCESS) {
                             tvLabel.setText(String.format("Successfully started trip"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            bCompleteTrip.setEnabled(true);
-                            bCompleteTrip.setAlpha(NO_ALPHA);
+                            bCancelTrip.setEnabled(true);
+                            bCancelTrip.setAlpha(NO_ALPHA);
 
                             bStartTrip.setEnabled(false);
                             bStartTrip.setAlpha(ALPHA);
@@ -211,22 +211,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
 
-            case R.id.bCompleteTrip:
+            case R.id.bCancelTrip:
 
-                //create an observer for listening complete trip event
-                final Action1<Event> completeTripSiteEventObserver = new Action1<Event>() {
+                //create an observer for listening cancel trip event
+                final Action1<Event> cancelTripSiteEventObserver = new Action1<Event>() {
                     @Override
                     public void call(Event event) {
                         if(event.status == Status.SUCCESS) {
                             //Cannot start trip on track token on which complete/cancel track was called
-                            tvLabel.setText(String.format("Successfully completed trip"));
+                            tvLabel.setText(String.format("Successfully cancelled trip"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
                             bNotifyMonitoringSessionUser.setEnabled(false);
                             bNotifyMonitoringSessionUser.setAlpha(ALPHA);
 
-                            bCompleteTrip.setEnabled(false);
-                            bCompleteTrip.setAlpha(ALPHA);
+                            bCancelTrip.setEnabled(false);
+                            bCancelTrip.setAlpha(ALPHA);
 
                             bStartTrip.setEnabled(true);
                             bStartTrip.setAlpha(NO_ALPHA);
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             showAlertDialogBox();
                         }
                         else if (event.status == Status.FAILURE) {
-                            tvLabel.setText(String.format("Failure in complete trip due to: %s", (CSErrorCode)event.object));
+                            tvLabel.setText(String.format("Failure in cancelling trip due to: %s", (CSErrorCode)event.object));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorRed));
                         }
 
@@ -243,10 +243,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.COMPLETE_TRIP).subscribe(completeTripSiteEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.CANCEL_TRIP).subscribe(cancelTripSiteEventObserver);
 
-                //complete trip
-                CSUserSession.getInstance().completeTripToSiteWithIdentifier(siteIdentifier, null /*track token*/);
+                //cancel trip
+                CSUserSession.getInstance().cancelTripToSiteWithIdentifier(siteIdentifier, null /*track token*/);
 
                 break;
 
@@ -301,6 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //unregister tracking identifier
                 CSUserSession.getInstance().unregisterTrackingIdentifier();
+
                 break;
         }
     }
@@ -308,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showAlertDialogBox() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Trip Completed Sucessfully")
+                .setTitle("Trip Cancelled Sucessfully")
                 .setMessage("Do Not forget to change value of track token before calling start trip again. Cannot start trip on track token on which complete/cancel track was called")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -331,15 +332,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bStartTrip.setEnabled(false);
         bStartTrip.setAlpha(ALPHA);
 
-        bCompleteTrip.setEnabled(false);
-        bCompleteTrip.setAlpha(ALPHA);
+        bCancelTrip.setEnabled(false);
+        bCancelTrip.setAlpha(ALPHA);
 
         bNotifyMonitoringSessionUser.setEnabled(false);
-        bCompleteTrip.setAlpha(ALPHA);
+        bCancelTrip.setAlpha(ALPHA);
     }
 
     private void createObserverToCheckIfCanNotifyMonitoringSessionUser() {
-        //create an observer to observe if you are near to any site and can notify associate there
+        //create an observer to observe if you are near to any site and can notify monitoring session user there
         final Action1<Event> canNotifyMonitoringUserAtSiteEventObserver = new Action1<Event>() {
             @Override
             public void call(com.curbside.sdk.event.Event event) {

@@ -72,7 +72,7 @@
         android:enabled="false"/>
 
     <Button
-        android:id="@+id/bCompleteTrip"
+        android:id="@+id/bCancelTrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -80,7 +80,7 @@
         android:elevation="4dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="Complete Trip"
+        android:text="Cancel Trip"
         android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
         android:enabled="false"/>
