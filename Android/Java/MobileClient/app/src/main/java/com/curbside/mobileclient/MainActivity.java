@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
 
                 //subscribe to the event on the eventBus
-                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.CANCEL_TRIP).subscribe(completeTripSiteEventObserver);
+                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.COMPLETE_TRIP).subscribe(completeTripSiteEventObserver);
 
                 //complete trip
                 CSUserSession.getInstance().completeTripToSiteWithIdentifier(siteIdentifier, null /*track token*/);
