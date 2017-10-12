@@ -6,13 +6,11 @@ This sample app integrates ARRIVE SDK. It is an example of a monitor app that is
 
 ## Prerequisite
 Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com). Login and do the following:
-* Setup and run the Transmit App. [Objective-C](https://github.com/Curbside/ARRIVESDKSampleApps/tree/master/iOS/ObjC/TransmitApp) or [Swift](https://github.com/Curbside/ARRIVESDKSampleApps/tree/master/iOS/Swift/TransmitApp).
+* Setup and run the [UserSession App](https://github.com/Curbside/ARRIVESDKSampleApps/tree/master/iOS/UserSessionApp).
 * Generate an [API Key and Secret](https://dashboard.curbside.com/account?accessTab=keys&accountTab=access)
-* Register an [App ID](https://dashboard.curbside.com/account?accessTab=ids&accountTab=access) for Monitor app
  
 ## Installing
 * Download and open the Xcode project
-* Change the Bundle Identifier to the Monitor [App ID](https://dashboard.curbside.com/account?accessTab=ids&accountTab=access) registered in the portal
 * Add [API Key and Secret](https://dashboard.curbside.com/account?accessTab=keys&accountTab=access) in place of `YOUR_API_KEY` and `YOUR_SECRET_KEY` in the `AppDelegate` file. 
 
 ## Running

@@ -8,11 +8,9 @@ This sample app integrates ARRIVE SDK. It is an example of a transmit app that i
 Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com). Login and do the following:
 * Generate a [usage token](https://dashboard.curbside.com/account?accessTab=tokens&accountTab=access)
 * Create a [site](https://dashboard.curbside.com/account?accountTab=sites)
-* Register an [App ID](https://dashboard.curbside.com/account?accessTab=ids&accountTab=access) for Transmit app
  
 ## Installing
 * Download and open the Xcode project
-* Change the Bundle Identifier to the Transmit [App ID](https://dashboard.curbside.com/account?accessTab=ids&accountTab=access) registered in the portal
 * Add [usage token](https://dashboard.curbside.com/account?accessTab=tokens&accountTab=access) in place of `YOUR_USAGE_TOKEN` in the `AppDelegate` file. 
 
 ## Running
@@ -27,7 +25,7 @@ Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com). L
 * Check [ARRIVE dashboard](https://dashboard.curbside.com) to see your current location and your status change from in-transit to arrived.
 * You can also use the Monitor app to view detailed information of your arrival.
 
-Visit [ARRIVE dashboard](https://dashboard.curbside.com) to get an overview of all your sites and trips or download the Monitor app [Objective-C](https://github.com/Curbside/ARRIVESDKSampleApps/tree/master/iOS/ObjC/MonitorApp) or [Swift](https://github.com/Curbside/ARRIVESDKSampleApps/tree/master/iOS/Swift/MonitorApp) to view trips from one of your sites.
+Visit [ARRIVE dashboard](https://dashboard.curbside.com) to get an overview of all your sites and trips or download the [Monitor app](https://github.com/Curbside/ARRIVESDKSampleApps/tree/master/iOS/MonitorApp) to view trips from one of your sites.
 
 ## Quickstart
 Refer to [Quickstart](https://developer.curbside.com/docs/getting-started/quickstart-ios-transmit-app/) to integrate ARRIVE into an existing project.
