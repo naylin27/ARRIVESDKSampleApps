@@ -9,7 +9,7 @@
 import UIKit
 import Curbside
 
-class ViewController: UIViewController, CSTrackerDelegate {
+class ViewController: UIViewController, CSUserSessionDelegate {
     
     private var isStartTrack = true
     private var hasTrackingID = false
@@ -34,7 +34,7 @@ class ViewController: UIViewController, CSTrackerDelegate {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.sessionValidated(notification:)), name: NSNotification.Name.init(rawValue: kSessionValidatedNotificationName), object: nil)
         resetError()
-        CSTracker.shared().delegate = self
+        CSUserSession.current().delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,7 +43,7 @@ class ViewController: UIViewController, CSTrackerDelegate {
     }
     
     @objc private func sessionValidated(notification: Notification) {
-        if let trackingIdentifier = CSMobileSession.current().trackingIdentifier, !(trackingIdentifier.characters.isEmpty) {
+        if let trackingIdentifier = CSUserSession.current().trackingIdentifier, !(trackingIdentifier.characters.isEmpty) {
             tidTextField.text = trackingIdentifier
             hasTrackingID = true
         } else {
@@ -61,11 +61,11 @@ class ViewController: UIViewController, CSTrackerDelegate {
     @IBAction func updateTrackingIdentifier(_ sender: Any) {
         let newTrackingIdentifier = tidTextField.text
         if hasTrackingID {
-            CSMobileSession.current().trackingIdentifier = nil
+            CSUserSession.current().trackingIdentifier = nil
             tidTextField.text = ""
             hasTrackingID = false
         } else {
-            CSMobileSession.current().trackingIdentifier = newTrackingIdentifier
+            CSUserSession.current().trackingIdentifier = newTrackingIdentifier
             hasTrackingID = true
         }
         updateButtons()
@@ -97,16 +97,10 @@ class ViewController: UIViewController, CSTrackerDelegate {
                 errorTitleLabel.text = "Empty site Identifier.";
                 return;
             }
-            
-            let site = CSUserSite.init(siteIdentifier: siteIdentifier, trackTokens: [trackToken])
-            CSTracker.shared().startTrackingUserSite(site)
+            CSUserSession.current().startTripToSite(withIdentifier: siteIdentifier, trackToken: trackToken)
         } else {
-            var trackTokens = [String]()
-            if let trackToken = trackTokenField.text, !trackToken.characters.isEmpty {
-                trackTokens = [trackToken]
-            }
-            let site = CSUserSite.init(siteIdentifier: siteIdentifier, trackTokens: trackTokens)
-            CSTracker.shared().stopTrackingUserSite(site)
+            let trackToken = trackTokenField.text
+            CSUserSession.current().cancelTripToSite(withIdentifier: siteIdentifier, trackToken: trackToken)
             
             siteIdentierField.text = nil
             trackTokenField.text = nil
@@ -116,19 +110,30 @@ class ViewController: UIViewController, CSTrackerDelegate {
         updateButtons()
     }
 
-    // MARK: - CSTrackerDelegate
+    // MARK: - CSUserSessionDelegate
     
-    func tracker(_ tracker: CSTracker, userArrivedAt site: CSUserSite) {
-        guard let trackingIdentifier = CSMobileSession.current().trackingIdentifier else { return }
+    func session(_ session: CSSession, changedState newState: CSSessionState) {
+        if newState == .valid {
+            NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: kSessionValidatedNotificationName), object: nil)
+        }
+        print("Session changed state to: \(newState.rawValue)")
+    }
+    
+    func session(_ session: CSUserSession, canNotifyMonitoringSessionUserAt site: CSSite) {
+        print("Session can notify associate at: \(site.siteIdentifier)")
+    }
+    
+    func session(_ session: CSUserSession, userArrivedAt site: CSSite) {
+        guard let trackingIdentifier = CSUserSession.current().trackingIdentifier else { return }
         statusLabel.text = "\(trackingIdentifier) arrived at site \(site.siteIdentifier)"
     }
     
-    func tracker(_ tracker: CSTracker, userApproachingSite site: CSUserSite) {
-        guard let trackingIdentifier = CSMobileSession.current().trackingIdentifier else { return }
+    func session(_ session: CSUserSession, userApproachingSite site: CSSite) {
+        guard let trackingIdentifier = CSUserSession.current().trackingIdentifier else { return }
         statusLabel.text = "\(trackingIdentifier) approaching at site \(site.siteIdentifier)"
     }
     
-    func tracker(_ tracker: CSTracker, encounteredError error: Error, forOperation trackerAction: CSTrackerAction) {
+    func session(_ session: CSUserSession, encounteredError error: Error, forOperation customerSessionAction: CSUserSessionAction) {
         guard let error = (error as NSError?),
             let userInfo = error.userInfo as? [String : Any] else { return }
         
@@ -137,7 +142,7 @@ class ViewController: UIViewController, CSTrackerDelegate {
         errorSolutionLabel.text = userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String
     }
     
-    func tracker(_ tracker: CSTracker, updatedTrackedSites trackedSites: Set<CSUserSite>) {
+    func session(_ session: CSUserSession, updatedTrackedSites trackedSites: Set<CSSite>) {
         // We will just show the first one for now. It is in dispatch_async because we are making changes in the UI
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
@@ -146,7 +151,7 @@ class ViewController: UIViewController, CSTrackerDelegate {
             } else {
                 let site = trackedSites.first!
                 strongSelf.siteIdentierField.text = site.siteIdentifier
-                if site.trackTokens != nil, let firstTrackToken = site.trackTokens?.first {
+                if let firstTrackToken = site.tripInfos?.first?.trackToken {
                     strongSelf.trackTokenField.text = firstTrackToken
                 } else {
                     strongSelf.trackTokenField.text = ""

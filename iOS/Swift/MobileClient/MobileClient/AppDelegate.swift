@@ -13,17 +13,17 @@ import CoreLocation
 let kSessionValidatedNotificationName = "SessionValidatedNotificationName"
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CSMobileSessionDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let locationManager = CLLocationManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Mobile Clients
-        let sdkSession = CSMobileSession.createSession(withUsageToken: "YOUR_USAGE_TOKEN", delegate: self)
+        // Transmit Client
+        let sdkSession = CSUserSession.createSession(withUsageToken: "YOUR_USAGE_TOKEN", delegate: nil)
         
         // Call sessions method application:didFinishLaunchingWithOptions:
-        sdkSession.application(UIApplication.shared, didFinishLaunchingWithOptions: nil)
+        sdkSession.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions)
         
         // Request always authorization
         locationManager.requestAlwaysAuthorization()
@@ -31,21 +31,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CSMobileSessionDelegate {
         return true
     }
     
-    // MARK: - CSMobileSessionDelegate
-
-    func session(_ session: CSSession, changedState newState: CSSessionState) {
-        if newState == .valid {
-            NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: kSessionValidatedNotificationName), object: nil)
-        }
-        print("Session changed state to: \(newState.rawValue)")
-    }
-    
-    func session(_ session: CSMobileSession, canNotifyAssociateAt site: CSSite) {
-        print("Session can notify associate at: \(site.siteIdentifier)")
-    }
-    
-    func session(_ session: CSMobileSession!, statusUpdatedFor siteOpsNotification: CSSiteOpsNotification!) {
-        print("Session status updated for site ops notification: \(siteOpsNotification.description)")
-    }
 }
 

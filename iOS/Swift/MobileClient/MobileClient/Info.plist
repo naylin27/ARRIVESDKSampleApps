@@ -20,6 +20,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>MobileClient needs Always authorization</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -46,7 +48,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>MobileClient needs Always authorization</string>
 </dict>
 </plist>
