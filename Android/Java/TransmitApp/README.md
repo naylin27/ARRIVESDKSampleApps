@@ -5,7 +5,7 @@ doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without
 
 ### Prerequisites
 
-Register for an account at [ARRIVE dashboard](https://control.curbside.com) and log into ARRIVE dashboard. Do the following:
+Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) and log into ARRIVE dashboard. Do the following:
 * Generate usage token
 * Create a site
 * Register an App ID for Mobile app
@@ -35,8 +35,8 @@ Register for an account at [ARRIVE dashboard](https://control.curbside.com) and 
 * Once you are near the site, you can also notify monitoring user by tapping "Notify Monitoring Session User".
 
 ## View user trip
-* Check [ARRIVE dashboard](https://control.curbside.com) to see your current location and your status change from in-transit to arrived.
-* Visit [ARRIVE dashboard](https://control.curbside.com) to get an overview of all your sites and trips.
+* Check [ARRIVE dashboard](https://dashboard.curbside.com/) to see your current location and your status change from in-transit to arrived.
+* Visit [ARRIVE dashboard](https://dashboard.curbside.com/) to get an overview of all your sites and trips.
 
 ## Quickstart
 Refer to [Quickstart](https://developer.curbside.com/docs/getting-started/quickstart-android-transmit-app/) to integrate ARRIVE into an existing project.
