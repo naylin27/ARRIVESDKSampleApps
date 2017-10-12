@@ -1,8 +1,8 @@
-# Transmit App
+# UserSession App
 
 The ARRIVE SDK delivers reliable arrival prediction. Battle-tested by millions of customer arrivals in real world commerce, ARRIVE sends an accurate alert before arrival and gives you true visibility into customer ETA and dwell time. ARRIVE hooks easily into mobile commerce infrastructure and on-site apps or POS for notifications.
 
-This sample app integrates ARRIVE SDK. It is an example of a transmit app that is used to transmit accurate user location events to ARRIVE server. Run the sample app on a device before doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without leaving the office.
+This sample app integrates ARRIVE SDK. It is an example of a UserSession app that is used to UserSession accurate user location events to ARRIVE server. Run the sample app on a device before doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without leaving the office.
 
 ## Prerequisite
 Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com). Login and do the following:
