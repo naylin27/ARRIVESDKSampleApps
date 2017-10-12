@@ -2,15 +2,17 @@
 
 The ARRIVE SDK delivers reliable arrival prediction. Battle-tested by millions of customer arrivals in real world commerce, ARRIVE sends an accurate alert before arrival and gives you true visibility into customer ETA and dwell time. ARRIVE hooks easily into mobile commerce infrastructure and on-site apps or POS for notifications.
 
-This sample app integrates ARRIVE SDK. It is an example of a UserSession app that is used to UserSession accurate user location events to ARRIVE server. Run the sample app on a device before doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without leaving the office.
+This sample app integrates ARRIVE SDK. It is an example of a UserSession app that is used to UserSession accurate user location events to ARRIVE server.
 
 ## Prerequisite
 Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com). Login and do the following:
 * Generate a [usage token](https://dashboard.curbside.com/account?accessTab=tokens&accountTab=access)
 * Create a [site](https://dashboard.curbside.com/account?accountTab=sites)
- 
+
 ## Installing
-* Download and open the Xcode project
+* The recommended way to install the SDK is via [CocoaPods](https://cocoapods.org)
+  * Run `pod install` from the command line for the initial install.
+  * Open `UserSessionApp.xcworkspace`.
 * Add [usage token](https://dashboard.curbside.com/account?accessTab=tokens&accountTab=access) in place of `YOUR_USAGE_TOKEN` in the `AppDelegate` file. 
 
 ## Running

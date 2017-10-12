@@ -19,7 +19,6 @@
 		34E334641F4F26FE00AC3B12 /* ConfigureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34E334621F4F26FE00AC3B12 /* ConfigureViewController.xib */; };
 		34E334671F4F348700AC3B12 /* MonitorExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E334661F4F348700AC3B12 /* MonitorExtras.m */; };
 		34E334691F4F456800AC3B12 /* CHANGELOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 34E334681F4F456800AC3B12 /* CHANGELOG.txt */; };
-		C80C8E871F8FEC1F004CE7C6 /* Curbside.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80C8E861F8FEC1F004CE7C6 /* Curbside.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +41,6 @@
 		34E334651F4F348700AC3B12 /* MonitorExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonitorExtras.h; sourceTree = "<group>"; };
 		34E334661F4F348700AC3B12 /* MonitorExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonitorExtras.m; sourceTree = "<group>"; };
 		34E334681F4F456800AC3B12 /* CHANGELOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.txt; sourceTree = "<group>"; };
-		C80C8E861F8FEC1F004CE7C6 /* Curbside.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Curbside.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +48,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C80C8E871F8FEC1F004CE7C6 /* Curbside.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				34E334681F4F456800AC3B12 /* CHANGELOG.txt */,
-				C80C8E861F8FEC1F004CE7C6 /* Curbside.framework */,
 				34E3343F1F4F1D0300AC3B12 /* MonitorApp */,
 				34E3343E1F4F1D0300AC3B12 /* Products */,
 			);

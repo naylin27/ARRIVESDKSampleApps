@@ -10,7 +10,9 @@ Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com). L
 * Generate an [API Key and Secret](https://dashboard.curbside.com/account?accessTab=keys&accountTab=access)
  
 ## Installing
-* Download and open the Xcode project
+* The recommended way to install the SDK is via [CocoaPods](https://cocoapods.org)
+  * Run `pod install` from the command line for the initial install.
+  * Open `UserSessionApp.xcworkspace`.
 * Add [API Key and Secret](https://dashboard.curbside.com/account?accessTab=keys&accountTab=access) in place of `YOUR_API_KEY` and `YOUR_SECRET_KEY` in the `AppDelegate` file. 
 
 ## Running
