@@ -8,7 +8,6 @@ doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without
 Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) and log into ARRIVE dashboard. Do the following:
 * Generate usage token
 * Create a site
-* Register an App ID for Mobile app
 
 ### Installing
 
@@ -21,7 +20,6 @@ Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) a
 
 ## Running
 * Add the generated usage token in place of `USAGE_TOKEN` defined in the MainActivity of the project. 
-* Change the application Id to the Mobile App ID registered in the portal.
 * Run the app 
 * Grant permission to use location services.
 * Enter tracking identifier
