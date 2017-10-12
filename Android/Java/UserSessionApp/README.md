@@ -1,7 +1,6 @@
 # Android Sample App
 
-This sample app demonstrates how to integrate Curbside SDK with an android app using the Java Programming Language. Run the sample app on a device before
-doing a drive test or try the SDK’s mock trip simulator to test ARRIVE without leaving the office.
+This sample app demonstrates how to integrate Curbside SDK with an android app using the Java Programming Language. Run the sample app on a device before doing a drive test.
 
 ### Prerequisites
 
