@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvUserSessionApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="5dp"
+        android:text="UserSessionApp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:typeface="serif" />
+
+    <EditText
+        android:id="@+id/etTrackingIdentifier"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:hint="Tracking Identifier"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etTrackToken"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:hint="Track Token"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etSiteIdentifier"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:hint="Site Identifier"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/bRegisterTrackingId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Register Tracking ID"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite" />
+
+    <Button
+        android:id="@+id/bStartTrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Start Trip"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/bCancelTrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Cancel Trip"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/bNotifyMonitoringSessionUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Notify Monitoring Session User"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/bUnregisterTrackingId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Unregister Tracking ID"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
+        android:enabled="false"/>
+
+    <TextView
+        android:id="@+id/tvLabel"
+        android:textSize="12sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/colorRed"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:fitsSystemWindows="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:breakStrategy="balanced"
+        android:inputType="textMultiLine"
+        android:singleLine="false"
+        android:padding="5dp" />
+
+
+</LinearLayout>
