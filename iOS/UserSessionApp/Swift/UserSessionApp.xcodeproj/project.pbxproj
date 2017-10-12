@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		349F27011F61B76600D180CB /* TransmitApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransmitApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		349F27011F61B76600D180CB /* UserSessionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserSessionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		349F27041F61B76600D180CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		349F27061F61B76600D180CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		349F27091F61B76600D180CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 			isa = PBXGroup;
 			children = (
 				C80C8E841F8FE799004CE7C6 /* Curbside.framework */,
-				349F27031F61B76600D180CB /* TransmitApp */,
+				349F27031F61B76600D180CB /* UserSessionApp */,
 				349F27021F61B76600D180CB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,12 +50,12 @@
 		349F27021F61B76600D180CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				349F27011F61B76600D180CB /* TransmitApp.app */,
+				349F27011F61B76600D180CB /* UserSessionApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		349F27031F61B76600D180CB /* TransmitApp */ = {
+		349F27031F61B76600D180CB /* UserSessionApp */ = {
 			isa = PBXGroup;
 			children = (
 				349F27041F61B76600D180CB /* AppDelegate.swift */,
@@ -65,15 +65,15 @@
 				349F270D1F61B76600D180CB /* LaunchScreen.storyboard */,
 				349F27101F61B76600D180CB /* Info.plist */,
 			);
-			path = TransmitApp;
+			path = UserSessionApp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		349F27001F61B76600D180CB /* TransmitApp */ = {
+		349F27001F61B76600D180CB /* UserSessionApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 349F27131F61B76600D180CB /* Build configuration list for PBXNativeTarget "TransmitApp" */;
+			buildConfigurationList = 349F27131F61B76600D180CB /* Build configuration list for PBXNativeTarget "UserSessionApp" */;
 			buildPhases = (
 				349F26FD1F61B76600D180CB /* Sources */,
 				349F26FE1F61B76600D180CB /* Frameworks */,
@@ -83,9 +83,9 @@
 			);
 			dependencies = (
 			);
-			name = TransmitApp;
-			productName = TransmitApp;
-			productReference = 349F27011F61B76600D180CB /* TransmitApp.app */;
+			name = UserSessionApp;
+			productName = UserSessionApp;
+			productReference = 349F27011F61B76600D180CB /* UserSessionApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -110,7 +110,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 349F26FC1F61B76600D180CB /* Build configuration list for PBXProject "TransmitApp" */;
+			buildConfigurationList = 349F26FC1F61B76600D180CB /* Build configuration list for PBXProject "UserSessionApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -123,7 +123,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				349F27001F61B76600D180CB /* TransmitApp */,
+				349F27001F61B76600D180CB /* UserSessionApp */,
 			);
 		};
 /* End PBXProject section */
@@ -277,9 +277,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = TransmitApp/Info.plist;
+				INFOPLIST_FILE = UserSessionApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.TransmitApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.UserSessionApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -294,9 +294,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = TransmitApp/Info.plist;
+				INFOPLIST_FILE = UserSessionApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.TransmitApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.UserSessionApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -305,7 +305,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		349F26FC1F61B76600D180CB /* Build configuration list for PBXProject "TransmitApp" */ = {
+		349F26FC1F61B76600D180CB /* Build configuration list for PBXProject "UserSessionApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				349F27111F61B76600D180CB /* Debug */,
@@ -314,7 +314,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		349F27131F61B76600D180CB /* Build configuration list for PBXNativeTarget "TransmitApp" */ = {
+		349F27131F61B76600D180CB /* Build configuration list for PBXNativeTarget "UserSessionApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				349F27141F61B76600D180CB /* Debug */,

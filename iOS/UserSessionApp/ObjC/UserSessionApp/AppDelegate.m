@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  TransmitApp
+//  UserSessionApp
 //
 //  Created by Radwar on 9/3/17.
 //  Copyright © 2017 curbside. All rights reserved.
@@ -23,7 +23,6 @@
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
         [_locationManager requestAlwaysAuthorization];
     
-    // Transmit Client
     CSUserSession *sdksession = [CSUserSession createSessionWithUsageToken:@"YOUR_USAGE_TOKEN" delegate:nil];
     
     // Call sessions method application:didFinishLaunchingWithOptions:

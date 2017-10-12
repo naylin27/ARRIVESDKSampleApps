@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		343B560E1F5CEBD800FDC32E /* TransmitApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransmitApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		343B560E1F5CEBD800FDC32E /* UserSessionApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserSessionApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		343B56121F5CEBD800FDC32E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		343B56141F5CEBD800FDC32E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		343B56151F5CEBD800FDC32E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -46,7 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				C8C798501F8FE48200993F54 /* Curbside.framework */,
-				343B56101F5CEBD800FDC32E /* TransmitApp */,
+				343B56101F5CEBD800FDC32E /* UserSessionApp */,
 				343B560F1F5CEBD800FDC32E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,12 +54,12 @@
 		343B560F1F5CEBD800FDC32E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				343B560E1F5CEBD800FDC32E /* TransmitApp.app */,
+				343B560E1F5CEBD800FDC32E /* UserSessionApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		343B56101F5CEBD800FDC32E /* TransmitApp */ = {
+		343B56101F5CEBD800FDC32E /* UserSessionApp */ = {
 			isa = PBXGroup;
 			children = (
 				343B56141F5CEBD800FDC32E /* AppDelegate.h */,
@@ -72,7 +72,7 @@
 				343B56221F5CEBD800FDC32E /* Info.plist */,
 				343B56111F5CEBD800FDC32E /* Supporting Files */,
 			);
-			path = TransmitApp;
+			path = UserSessionApp;
 			sourceTree = "<group>";
 		};
 		343B56111F5CEBD800FDC32E /* Supporting Files */ = {
@@ -86,9 +86,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		343B560D1F5CEBD800FDC32E /* TransmitApp */ = {
+		343B560D1F5CEBD800FDC32E /* UserSessionApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 343B56251F5CEBD800FDC32E /* Build configuration list for PBXNativeTarget "TransmitApp" */;
+			buildConfigurationList = 343B56251F5CEBD800FDC32E /* Build configuration list for PBXNativeTarget "UserSessionApp" */;
 			buildPhases = (
 				343B560A1F5CEBD800FDC32E /* Sources */,
 				343B560B1F5CEBD800FDC32E /* Frameworks */,
@@ -98,9 +98,9 @@
 			);
 			dependencies = (
 			);
-			name = TransmitApp;
-			productName = TransmitApp;
-			productReference = 343B560E1F5CEBD800FDC32E /* TransmitApp.app */;
+			name = UserSessionApp;
+			productName = UserSessionApp;
+			productReference = 343B560E1F5CEBD800FDC32E /* UserSessionApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -124,7 +124,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 343B56091F5CEBD800FDC32E /* Build configuration list for PBXProject "TransmitApp" */;
+			buildConfigurationList = 343B56091F5CEBD800FDC32E /* Build configuration list for PBXProject "UserSessionApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -137,7 +137,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				343B560D1F5CEBD800FDC32E /* TransmitApp */,
+				343B560D1F5CEBD800FDC32E /* UserSessionApp */,
 			);
 		};
 /* End PBXProject section */
@@ -289,9 +289,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = TransmitApp/Info.plist;
+				INFOPLIST_FILE = UserSessionApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.TransmitApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.UserSessionApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -305,9 +305,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = TransmitApp/Info.plist;
+				INFOPLIST_FILE = UserSessionApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.TransmitApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.UserSessionApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -315,7 +315,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		343B56091F5CEBD800FDC32E /* Build configuration list for PBXProject "TransmitApp" */ = {
+		343B56091F5CEBD800FDC32E /* Build configuration list for PBXProject "UserSessionApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				343B56231F5CEBD800FDC32E /* Debug */,
@@ -324,7 +324,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		343B56251F5CEBD800FDC32E /* Build configuration list for PBXNativeTarget "TransmitApp" */ = {
+		343B56251F5CEBD800FDC32E /* Build configuration list for PBXNativeTarget "UserSessionApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				343B56261F5CEBD800FDC32E /* Debug */,

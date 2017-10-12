@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="QyH-HY-2FS">
             <objects>
-                <viewController id="rlX-x5-jYd" customClass="ViewController" customModule="TransmitApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rlX-x5-jYd" customClass="ViewController" customModule="UserSessionApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ubP-Nq-JvM"/>
                         <viewControllerLayoutGuide type="bottom" id="RnQ-QJ-psq"/>

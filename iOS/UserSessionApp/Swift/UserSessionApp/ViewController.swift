@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  TransmitApp
+//  UserSessionApp
 //
 //  Created by Radwar on 9/7/17.
 //  Copyright © 2017 curbside. All rights reserved.
