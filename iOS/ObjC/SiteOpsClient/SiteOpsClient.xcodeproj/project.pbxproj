@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		348FD50E1F69F1F600FD9A28 /* Curbside.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 348FD50D1F69F1F600FD9A28 /* Curbside.framework */; };
 		34E334421F4F1D0300AC3B12 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E334411F4F1D0300AC3B12 /* main.m */; };
 		34E334451F4F1D0300AC3B12 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E334441F4F1D0300AC3B12 /* AppDelegate.m */; };
 		34E334481F4F1D0300AC3B12 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E334471F4F1D0300AC3B12 /* ViewController.m */; };
@@ -20,10 +19,10 @@
 		34E334641F4F26FE00AC3B12 /* ConfigureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34E334621F4F26FE00AC3B12 /* ConfigureViewController.xib */; };
 		34E334671F4F348700AC3B12 /* SiteOpsExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E334661F4F348700AC3B12 /* SiteOpsExtras.m */; };
 		34E334691F4F456800AC3B12 /* CHANGELOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 34E334681F4F456800AC3B12 /* CHANGELOG.txt */; };
+		C80C8E871F8FEC1F004CE7C6 /* Curbside.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80C8E861F8FEC1F004CE7C6 /* Curbside.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		348FD50D1F69F1F600FD9A28 /* Curbside.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Curbside.framework; sourceTree = "<group>"; };
 		34E3343D1F4F1D0300AC3B12 /* SiteOpsClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SiteOpsClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34E334411F4F1D0300AC3B12 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		34E334431F4F1D0300AC3B12 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -43,6 +42,7 @@
 		34E334651F4F348700AC3B12 /* SiteOpsExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteOpsExtras.h; sourceTree = "<group>"; };
 		34E334661F4F348700AC3B12 /* SiteOpsExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteOpsExtras.m; sourceTree = "<group>"; };
 		34E334681F4F456800AC3B12 /* CHANGELOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.txt; sourceTree = "<group>"; };
+		C80C8E861F8FEC1F004CE7C6 /* Curbside.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Curbside.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				348FD50E1F69F1F600FD9A28 /* Curbside.framework in Frameworks */,
+				C80C8E871F8FEC1F004CE7C6 /* Curbside.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				34E334681F4F456800AC3B12 /* CHANGELOG.txt */,
-				348FD50D1F69F1F600FD9A28 /* Curbside.framework */,
+				C80C8E861F8FEC1F004CE7C6 /* Curbside.framework */,
 				34E3343F1F4F1D0300AC3B12 /* SiteOpsClient */,
 				34E3343E1F4F1D0300AC3B12 /* Products */,
 			);
@@ -324,7 +324,7 @@
 				);
 				INFOPLIST_FILE = SiteOpsClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.SiteOpsClient1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.MonitorClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -340,7 +340,7 @@
 				);
 				INFOPLIST_FILE = SiteOpsClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.SiteOpsClient1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.MonitorClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

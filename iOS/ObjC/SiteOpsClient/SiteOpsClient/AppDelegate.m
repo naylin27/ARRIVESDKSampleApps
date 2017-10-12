@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 @import Curbside;
 
-@interface AppDelegate () <CSMobileSessionDelegate>
+@interface AppDelegate ()
 @end
 
 @implementation AppDelegate
@@ -18,16 +18,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 #warning Replace with a valid API Key and Secret generated from your Curbside ARRIVE platform
 
-    CSSiteOpsSession *sdksession = [CSSiteOpsSession createSessionWithAPIKey:@"YOUR_API_KEY" secret:@"YOUR_SECRET_KEY" delegate:self];
+    CSMonitoringSession *sdksession = [CSMonitoringSession createSessionWithAPIKey:@"YOUR_API_KEY" secret:@"YOUR_SECRET_KEY" delegate:nil];
     
     // Call sessions method application:didFinishLaunchingWithOptions:
-    [sdksession application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil];
+    [sdksession application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:launchOptions];
     return YES;
-}
-
-- (void)session:(CSSession *)session changedState:(CSSessionState)newState
-{
-    NSLog(@"Session changed state to %li",(long)newState);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

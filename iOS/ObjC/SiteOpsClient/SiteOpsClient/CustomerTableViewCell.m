@@ -37,19 +37,19 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void)setUserLocationUpdate:(CSUserLocationUpdate *)userLocationUpdate
+- (void)setUserStatusUpdate:(CSUserStatusUpdate *)userStatusUpdate
 {
-    _userLocationUpdate = userLocationUpdate;
-    NSString *customerName = userLocationUpdate.customerInfo.fullName;
+    _userStatusUpdate = userStatusUpdate;
+    NSString *customerName = userStatusUpdate.userInfo.fullName;
     if (customerName.length == 0)
-        customerName = userLocationUpdate.trackingIdentifier;
+        customerName = userStatusUpdate.trackingIdentifier;
     _customerNameTIDLabel.text = customerName;
-    int distanceFromSite = userLocationUpdate.distanceFromSite;
-    _distanceValueLabel.text = FormatDistance(userLocationUpdate.distanceFromSite);
-    int eta = userLocationUpdate.estimatedTimeOfArrival;
+    int distanceFromSite = userStatusUpdate.distanceFromSite;
+    _distanceValueLabel.text = FormatDistance(userStatusUpdate.distanceFromSite);
+    int eta = userStatusUpdate.estimatedTimeOfArrival;
     _etaValueLabel.text = eta > 0 ?  FormatSeconds(eta) : @"-";
-    _dateValueLabel.text = FormatDate(userLocationUpdate.lastUpdateTimestamp);
-    switch (_userLocationUpdate.userStatus) {
+    _dateValueLabel.text = FormatDate(userStatusUpdate.lastUpdateTimestamp);
+    switch (_userStatusUpdate.userStatus) {
         case CSUserStatusArrived:
             _statusLabel.text = @"Arrived";
             break;
@@ -70,16 +70,16 @@
     }
     
 #warning Note this is taking the first trackToken and using that trackToken for dispaly and cancel/Stop.
-    CSTripInfo *firstTripInfo = [_userLocationUpdate.tripInfos firstObject];
+    CSTripInfo *firstTripInfo = [_userStatusUpdate.tripInfos firstObject];
     _trackToken = firstTripInfo.trackToken;
     _trackTokenLabel.text = _trackToken;
 }
 
 - (IBAction)cancelTrip:(id)sender {
-    [[CSSiteArrivalTracker sharedArrivalTracker] cancelTrackingArrivalForTrackingIdentifier:_userLocationUpdate.trackingIdentifier trackTokens:@[_trackToken]];
+    [[CSMonitoringSession currentSession] cancelTripForTrackingIdentifier:_userStatusUpdate.trackingIdentifier trackTokens:@[_trackToken]];
 }
 
 - (IBAction)endTrip:(id)sender {
-    [[CSSiteArrivalTracker sharedArrivalTracker] stopTrackingArrivalForTrackingIdentifier:_userLocationUpdate.trackingIdentifier trackTokens:@[_trackToken]];
+    [[CSMonitoringSession currentSession] completeTripForTrackingIdentifier:_userStatusUpdate.trackingIdentifier trackTokens:@[_trackToken]];
 }
 @end

@@ -13,6 +13,6 @@ static NSString *kCustomerTableViewCellIdentifier = @"kCustomerTableViewCellIden
 
 @interface CustomerTableViewCell : UITableViewCell
 
-@property (nonatomic, strong)CSUserLocationUpdate *userLocationUpdate;
+@property (nonatomic, strong)CSUserStatusUpdate *userStatusUpdate;
 
 @end

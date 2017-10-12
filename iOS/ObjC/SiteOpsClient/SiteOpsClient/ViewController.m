@@ -13,12 +13,12 @@
 
 @import Curbside;
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource, CSSiteArrivalTrackerDelegate>
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource, CSMonitoringSessionDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *customersTableView;
 @property (strong, nonatomic) NSString *trackingIdentifier;
 @property (strong, nonatomic) NSString *siteIdentifier;
-@property (strong, nonatomic) NSArray *customerLocationUpdates;
+@property (strong, nonatomic) NSArray<CSUserStatusUpdate *> *customerLocationUpdates;
 
 @end
 
@@ -42,7 +42,7 @@
     [userDefaults removeObjectForKey:kSiteIdentifierKey];
     [userDefaults synchronize];
     
-    [[CSSiteArrivalTracker sharedArrivalTracker] stopTrackingArrivals];
+    [[CSMonitoringSession currentSession] stopMonitoringArrivals];
     [self _showSetupViewController];
 }
 
@@ -62,7 +62,7 @@
 {
     [super viewWillAppear:animated];
     
-    [CSSiteArrivalTracker sharedArrivalTracker].delegate = self;
+    [CSMonitoringSession currentSession].delegate = self;
     UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 20 , 55, 25)];
     [closeButton setTitle:@"Close" forState:UIControlStateNormal];
     closeButton.layer.cornerRadius = 2.0f;
@@ -82,15 +82,14 @@
 
 - (void)_startUpdates
 {
-    [CSSiteOpsSession currentSession].trackingIdentifier = _trackingIdentifier;
-    CSSite *site = [[CSSite alloc] initWithSiteIdentifier:_siteIdentifier];
-    CSSiteArrivalTracker *siteArrivalTracker = [CSSiteArrivalTracker sharedArrivalTracker];
-    [siteArrivalTracker startTrackingArrivalsForSite:site];
-    siteArrivalTracker.locationUpdateHandler = ^(NSArray *userLocationUpdates) {
-        _customerLocationUpdates = userLocationUpdates;
+    CSMonitoringSession *currentSession = [CSMonitoringSession currentSession];
+    currentSession.trackingIdentifier = _trackingIdentifier;
+    currentSession.statusesUpdatedHandler = ^(NSArray<CSUserStatusUpdate *> * _Nonnull updates) {
+        _customerLocationUpdates = updates;
         [_customersTableView reloadData];
         self.title = [NSString stringWithFormat:@"%@ @ %@",_siteIdentifier, FormatDate([NSDate date])];
     };
+    [currentSession startMonitoringArrivalsToSiteWithIdentifier:_siteIdentifier];
 }
 
 - (void)_showSetupViewController
@@ -120,7 +119,7 @@
         if (cell == nil)
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCustomerTableViewCellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        ((CustomerTableViewCell *)cell).userLocationUpdate = [_customerLocationUpdates objectAtIndex:indexPath.row];
+        ((CustomerTableViewCell *)cell).userStatusUpdate = [_customerLocationUpdates objectAtIndex:indexPath.row];
     }
     return cell;
     
@@ -131,12 +130,19 @@
     NSLog(@"selected cell %li",(long)indexPath.row);
 }
 
-#pragma mark CSSiteArrivalTrackerDelegate
-- (void)siteArrivalTracker:(CSSiteArrivalTracker *)tracker encounteredError:(NSError *)error
+#pragma mark CSMonitoringSessionDelegate
+
+- (void)session:(CSSession *)session changedState:(CSSessionState)newState
+{
+    NSLog(@"Session changed state to %li",(long)newState);
+}
+
+- (void)session:(CSMonitoringSession *)session encounteredError:(NSError *)error
 {
     NSLog(@"Encountered Error : %@",error);
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error.description preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
 @end
