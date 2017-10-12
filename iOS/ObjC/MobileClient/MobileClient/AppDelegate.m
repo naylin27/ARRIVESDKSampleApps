@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 @import Curbside;
 
-@interface AppDelegate () <CSMobileSessionDelegate>
+@interface AppDelegate ()
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
@@ -23,25 +23,15 @@
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
         [_locationManager requestAlwaysAuthorization];
     
-    // Mobile Clients
-    CSMobileSession *sdksession = [CSMobileSession createSessionWithUsageToken:@"YOUR_USAGE_TOKEN" delegate:self];
+    // Transmit Client
+    CSUserSession *sdksession = [CSUserSession createSessionWithUsageToken:@"YOUR_USAGE_TOKEN" delegate:nil];
     
     // Call sessions method application:didFinishLaunchingWithOptions:
-    [sdksession application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:nil];
+    [sdksession application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:launchOptions];
     
     
     return YES;
 }
-
-
-- (void)session:(CSSession *)session changedState:(CSSessionState)newState
-{
-    if (newState == CSSessionStateValid)
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSessionValidatedNotificationName object:nil];
-
-    NSLog(@"Session changed state to %li",(long)newState);
-}
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

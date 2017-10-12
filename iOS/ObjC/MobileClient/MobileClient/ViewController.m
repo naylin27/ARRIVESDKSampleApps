@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 @import Curbside;
 
-@interface ViewController () <CSTrackerDelegate>
+@interface ViewController () <CSUserSessionDelegate>
 {
     BOOL _isStartTrack;
     BOOL _hasTrackingID;
@@ -41,7 +41,7 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_sessionValidated:) name:kSessionValidatedNotificationName object:nil];
     [self _resetError];
-    [CSTracker sharedTracker].delegate = self;
+    [CSUserSession currentSession].delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -57,7 +57,7 @@
 
 - (void)_sessionValidated:sender
 {
-    NSString *trackingIdentifier =  [CSMobileSession currentSession].trackingIdentifier;
+    NSString *trackingIdentifier =  [CSUserSession currentSession].trackingIdentifier;
     if (trackingIdentifier.length > 0) {
         _tidTextField.text = trackingIdentifier;
         _hasTrackingID = YES;
@@ -77,11 +77,11 @@
 - (IBAction)updateTrackingIdentifier:(id)sender {
     NSString *newTrackingIdentifier = _tidTextField.text;
     if (_hasTrackingID) {
-        [CSMobileSession currentSession].trackingIdentifier = nil;
+        [CSUserSession currentSession].trackingIdentifier = nil;
         _tidTextField.text = @"";
         _hasTrackingID = NO;
     } else {
-        [CSMobileSession currentSession].trackingIdentifier = newTrackingIdentifier;
+        [CSUserSession currentSession].trackingIdentifier = newTrackingIdentifier;
         _hasTrackingID = YES;
     }
     [self _updateButtons];
@@ -100,29 +100,26 @@
     NSString *siteIdentifier = _siteIdentierField.text;
 
     if (_isStartTrack) {
-    if (trackingIdentifier.length == 0) {
-        _errorTitleLabel.text = @"Empty Tracking Identifier.";
-        return;
-    }
-    
-    if (trackToken.length == 0) {
-        _errorTitleLabel.text = @"Empty track token.";
-        return;
-    }
-    
-    if (siteIdentifier.length == 0) {
-        _errorTitleLabel.text = @"Empty site Identifier.";
-        return;
-    }
+        if (trackingIdentifier.length == 0) {
+            _errorTitleLabel.text = @"Empty Tracking Identifier.";
+            return;
+        }
         
-    CSUserSite *site = [[CSUserSite alloc] initWithSiteIdentifier:siteIdentifier trackTokens:@[trackToken]];
-    [[CSTracker sharedTracker] startTrackingUserSite:site];
+        if (trackToken.length == 0) {
+            _errorTitleLabel.text = @"Empty track token.";
+            return;
+        }
+        
+        if (siteIdentifier.length == 0) {
+            _errorTitleLabel.text = @"Empty site Identifier.";
+            return;
+        }
+        
+        [[CSUserSession currentSession] startTripToSiteWithIdentifier:siteIdentifier trackToken:trackToken];
         _isStartTrack = NO;
     } else {
         NSString *trackToken = _trackTokenField.text;
-        NSArray *trackTokens = trackToken.length > 0 ? @[trackToken] : @[];
-        CSUserSite *site = [[CSUserSite alloc] initWithSiteIdentifier:siteIdentifier trackTokens:trackTokens];
-        [[CSTracker sharedTracker] stopTrackingUserSite:site];
+        [[CSUserSession currentSession] cancelTripToSiteWithIdentifier:siteIdentifier trackToken:trackToken];
         _siteIdentierField.text = nil;
         _trackTokenField.text = nil;
         _isStartTrack = YES;
@@ -130,21 +127,29 @@
     [self _updateButtons];
 }
 
-#pragma mark CSTrackerDelegate
+#pragma mark CSUserSessionDelegate
 
-- (void)tracker:(CSTracker *)tracker userArrivedAtSite:(CSUserSite *)site
+- (void)session:(CSSession *)session changedState:(CSSessionState)newState
 {
-    NSString *trackingIdentifier = [CSMobileSession currentSession].trackingIdentifier;
+    if (newState == CSSessionStateValid)
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSessionValidatedNotificationName object:nil];
+    
+    NSLog(@"Session changed state to %li",(long)newState);
+}
+
+- (void)session:(CSUserSession *)session userArrivedAtSite:(CSSite *)site
+{
+    NSString *trackingIdentifier = [CSUserSession currentSession].trackingIdentifier;
     _statusLabel.text = [NSString stringWithFormat:@"%@ arrived at site %@",trackingIdentifier, site.siteIdentifier];
 }
 
-- (void)tracker:(CSTracker *)tracker userApproachingSite:(CSUserSite *)site
+- (void)session:(CSUserSession *)session userApproachingSite:(CSSite *)site
 {
-    NSString *trackingIdentifier = [CSMobileSession currentSession].trackingIdentifier;
+    NSString *trackingIdentifier = [CSUserSession currentSession].trackingIdentifier;
     _statusLabel.text = [NSString stringWithFormat:@"%@ approaching site %@",trackingIdentifier, site.siteIdentifier];
 }
 
-- (void)tracker:(CSTracker *)tracker encounteredError:(NSError *)error forOperation:(CSTrackerAction)trackerAction
+- (void)session:(CSUserSession *)session encounteredError:(NSError *)error forOperation:(CSUserSessionAction)customerSessionAction
 {
     NSDictionary *userInfo = error.userInfo;
     _errorTitleLabel.text = [userInfo objectForKey:NSLocalizedDescriptionKey];
@@ -152,15 +157,15 @@
     _errorSolutionLabel.text = [userInfo objectForKey:NSLocalizedRecoverySuggestionErrorKey];
 }
 
-- (void)tracker:(CSTracker *)tracker updatedTrackedSites:(NSSet *)trackedSites
+- (void)session:(CSUserSession *)session updatedTrackedSites:(NSSet<CSSite *> *)trackedSites
 {
     // We will just show the first one for now. It is in dispatch_async because we are making changes in the UI
     dispatch_async(dispatch_get_main_queue(), ^{
         NSArray *sites = [trackedSites allObjects];
         if (sites.count > 0) {
-            CSUserSite *site = (CSUserSite *)sites.firstObject;
+            CSSite *site = (CSSite *)sites.firstObject;
             _siteIdentierField.text = site.siteIdentifier;
-            NSString *firstTrackToken = [site.trackTokens firstObject];
+            NSString *firstTrackToken = site.tripInfos.firstObject.trackToken;
             _trackTokenField.text = firstTrackToken ? firstTrackToken : @"";
             _isStartTrack = NO;
         } else {
