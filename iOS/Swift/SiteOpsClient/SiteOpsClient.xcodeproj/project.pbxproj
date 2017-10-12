@@ -12,7 +12,7 @@
 		349F27281F61B77C00D180CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349F27261F61B77C00D180CB /* Main.storyboard */; };
 		349F272A1F61B77C00D180CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 349F27291F61B77C00D180CB /* Assets.xcassets */; };
 		349F272D1F61B77C00D180CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 349F272B1F61B77C00D180CB /* LaunchScreen.storyboard */; };
-		C82D7B551F61E1BE00454FE4 /* Curbside.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C82D7B541F61E1BE00454FE4 /* Curbside.framework */; };
+		C80C8E891F8FF075004CE7C6 /* Curbside.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80C8E881F8FF075004CE7C6 /* Curbside.framework */; };
 		C82D7B571F61E1E000454FE4 /* CHANGELOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = C82D7B561F61E1E000454FE4 /* CHANGELOG.txt */; };
 		C82D7B651F61E82B00454FE4 /* SiteOpsExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = C82D7B641F61E82B00454FE4 /* SiteOpsExtras.m */; };
 		C82D7B8A1F61EC6500454FE4 /* CustomerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C82D7B881F61EC6500454FE4 /* CustomerTableViewCell.xib */; };
@@ -29,7 +29,7 @@
 		349F27291F61B77C00D180CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		349F272C1F61B77C00D180CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		349F272E1F61B77C00D180CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C82D7B541F61E1BE00454FE4 /* Curbside.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Curbside.framework; sourceTree = "<group>"; };
+		C80C8E881F8FF075004CE7C6 /* Curbside.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Curbside.framework; sourceTree = "<group>"; };
 		C82D7B561F61E1E000454FE4 /* CHANGELOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.txt; sourceTree = "<group>"; };
 		C82D7B621F61E82A00454FE4 /* SiteOpsClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SiteOpsClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		C82D7B631F61E82B00454FE4 /* SiteOpsExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteOpsExtras.h; sourceTree = "<group>"; };
@@ -45,7 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C82D7B551F61E1BE00454FE4 /* Curbside.framework in Frameworks */,
+				C80C8E891F8FF075004CE7C6 /* Curbside.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +55,7 @@
 		349F27161F61B77C00D180CB = {
 			isa = PBXGroup;
 			children = (
-				C82D7B541F61E1BE00454FE4 /* Curbside.framework */,
+				C80C8E881F8FF075004CE7C6 /* Curbside.framework */,
 				C82D7B561F61E1E000454FE4 /* CHANGELOG.txt */,
 				349F27211F61B77C00D180CB /* SiteOpsClient */,
 				349F27201F61B77C00D180CB /* Products */,
@@ -312,7 +312,7 @@
 				);
 				INFOPLIST_FILE = SiteOpsClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.curbside.SiteOpsClient-swift";
+				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.MonitorClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SiteOpsClient/SiteOpsClient-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -332,7 +332,7 @@
 				);
 				INFOPLIST_FILE = SiteOpsClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.curbside.SiteOpsClient-swift";
+				PRODUCT_BUNDLE_IDENTIFIER = com.curbside.MonitorClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SiteOpsClient/SiteOpsClient-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

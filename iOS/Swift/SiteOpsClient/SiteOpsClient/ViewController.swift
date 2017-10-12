@@ -9,12 +9,12 @@
 import UIKit
 import Curbside
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CSSiteArrivalTrackerDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CSMonitoringSessionDelegate {
     
     @IBOutlet var customersTableView: UITableView!
     var trackingIdentifier: String?
     var siteIdentifier: String?
-    var customerLocationUpdates = [CSUserLocationUpdate]()
+    var customerStatusUpdates = [CSUserStatusUpdate]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        CSSiteArrivalTracker.shared().delegate = self
+        CSMonitoringSession.current().delegate = self
         
         // Do we have a Site in preferences?
         readFromDefaults()
@@ -47,7 +47,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         userDefaults.removeObject(forKey: kSiteIdentifierKey)
         userDefaults.synchronize()
         
-        CSSiteArrivalTracker.shared().stopTrackingArrivals()
+        CSMonitoringSession.current().stopMonitoringArrivals()
         showSetupViewController()
     }
     
@@ -58,18 +58,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     private func startUpdates() {
-        CSSiteOpsSession.current().trackingIdentifier = trackingIdentifier
-        let site = CSSite.init(siteIdentifier: siteIdentifier)
-        let siteArrivalTracker = CSSiteArrivalTracker.shared()
-        siteArrivalTracker?.startTrackingArrivals(for: site)
-        siteArrivalTracker?.locationUpdateHandler = { [weak self] userLocationUpdates in
+        guard let siteIdentifier = siteIdentifier else { return }
+        CSMonitoringSession.current().trackingIdentifier = trackingIdentifier
+        CSMonitoringSession.current().statusesUpdatedHandler = { [weak self] userStatusUpdates in
             guard let strongSelf = self else { return }
-            guard let userLocationUpdates = userLocationUpdates as? [CSUserLocationUpdate] else { return  }
-            strongSelf.customerLocationUpdates = userLocationUpdates
+            strongSelf.customerStatusUpdates = userStatusUpdates
             strongSelf.customersTableView.reloadData()
             strongSelf.title = "\(strongSelf.siteIdentifier ?? "") @ \(FormatDate(Date.init()) ?? "")"
         }
-        
+        CSMonitoringSession.current().startMonitoringArrivalsToSite(withIdentifier: siteIdentifier)
     }
     
     private func showSetupViewController() {
@@ -80,14 +77,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return customerLocationUpdates.count
+        return customerStatusUpdates.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: kCustomerTableViewCellIdentifier, for: indexPath)
         cell.selectionStyle = .none
         if let customerCell = cell as? CustomerTableViewCell {
-            customerCell.userLocationUpdate = customerLocationUpdates[indexPath.row]
+            customerCell.userStatusUpdate = customerStatusUpdates[indexPath.row]
         }
         return cell
     }
@@ -102,10 +99,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         print("selected cell at row: \(indexPath.row)")
     }
 
-    // MARK: - CSSiteArrivalTrackerDelegate
+    // MARK: - CSMonitoringSessionDelegate
     
-    func siteArrivalTracker(_ tracker: CSSiteArrivalTracker!, encounteredError error: Error!) {
-        guard let error = error as NSError? else { return }
+    func session(_ session: CSSession, changedState newState: CSSessionState) {
+        print("Session changed state to: \(newState.rawValue)")
+    }
+    
+    func session(_ session: CSMonitoringSession, encounteredError error: Error) {
+        guard let error = (error as NSError?) else { return }
         print("Encountered Error: \(error.description)")
         let alertController = UIAlertController.init(title: "Error", message: error.description, preferredStyle: .alert)
         alertController.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))

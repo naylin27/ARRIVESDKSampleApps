@@ -13,7 +13,7 @@ let kCustomerTableViewCellIdentifier = "kCustomerTableViewCellIdentifier"
 
 class CustomerTableViewCell: UITableViewCell {
 
-    var userLocationUpdate: CSUserLocationUpdate? {
+    var userStatusUpdate: CSUserStatusUpdate? {
         didSet {
             updateUI()
         }
@@ -35,7 +35,7 @@ class CustomerTableViewCell: UITableViewCell {
     }
     
     private func updateUI() {
-        guard let userLocationUpdate = userLocationUpdate else {
+        guard let userStatusUpdate = userStatusUpdate else {
             customerNameTIDLabel.text = nil
             distanceValueLabel.text = nil
             etaValueLabel.text = nil
@@ -45,24 +45,24 @@ class CustomerTableViewCell: UITableViewCell {
         }
         
         // set customer name TID
-        if userLocationUpdate.customerInfo != nil, let customerName = userLocationUpdate.customerInfo.fullName, !(customerName.characters.isEmpty) {
+        if let customerName = userStatusUpdate.userInfo?.fullName, !(customerName.characters.isEmpty) {
             customerNameTIDLabel.text = customerName
         } else {
-            customerNameTIDLabel.text = userLocationUpdate.trackingIdentifier
+            customerNameTIDLabel.text = userStatusUpdate.trackingIdentifier
         }
         
         // set distance
-        distanceValueLabel.text = FormatDistance(Float(userLocationUpdate.distanceFromSite))
+        distanceValueLabel.text = FormatDistance(Float(userStatusUpdate.distanceFromSite))
         
         // set eta
-        let eta = userLocationUpdate.estimatedTimeOfArrival
+        let eta = userStatusUpdate.estimatedTimeOfArrival
         etaValueLabel.text = eta > 0 ? FormatSeconds(eta) : "-"
         
         // set date
-        dateValueLabel.text = FormatDate(userLocationUpdate.lastUpdateTimestamp)
+        dateValueLabel.text = FormatDate(userStatusUpdate.lastUpdateTimestamp)
         
         // set user status
-        switch userLocationUpdate.userStatus {
+        switch userStatusUpdate.userStatus {
         case .arrived:
             statusLabel.text = "Arrived"
         case .inTransit:
@@ -77,14 +77,14 @@ class CustomerTableViewCell: UITableViewCell {
     }
     
     @IBAction func endTrip(_ sender: Any) {
-        if let trackingIdentifier = userLocationUpdate?.trackingIdentifier {
-            CSSiteArrivalTracker.shared().stopTrackingArrival(forTrackingIdentifier: trackingIdentifier)
+        if let trackingIdentifier = userStatusUpdate?.trackingIdentifier {
+            CSMonitoringSession.current().completeTrip(forTrackingIdentifier: trackingIdentifier, trackTokens: nil)
         }
     }
     
     @IBAction func cancelTrip(_ sender: Any) {
-        if let trackingIdentifier = userLocationUpdate?.trackingIdentifier {
-            CSSiteArrivalTracker.shared().cancelTrackingArrival(forTrackingIdentifier: trackingIdentifier)
+        if let trackingIdentifier = userStatusUpdate?.trackingIdentifier {
+            CSMonitoringSession.current().cancelTrip(forTrackingIdentifier: trackingIdentifier, trackTokens: nil)
         }
     }
 

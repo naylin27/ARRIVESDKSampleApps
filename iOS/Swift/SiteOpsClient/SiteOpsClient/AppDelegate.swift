@@ -10,25 +10,18 @@ import UIKit
 import Curbside
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CSSessionDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Site Ops Clients
-        let sdksession = CSSiteOpsSession.createSession(withAPIKey: "YOUR_API_KEY", secret: "YOUR_SECRET_KEY", delegate: self)
+        // Monitor Client
+        let sdksession = CSMonitoringSession.createSession(withAPIKey: "YOUR_API_KEY", secret: "YOUR_SECRET_KEY", delegate: nil)
         
         // Call sessions method application:didFinishLaunchingWithOptions:
-        sdksession?.application(UIApplication.shared, didFinishLaunchingWithOptions: nil)
+        sdksession.application(UIApplication.shared, didFinishLaunchingWithOptions: launchOptions)
         
         return true
-    }
-
-    // MARK: - CSSessionDelegate
-    
-    func session(_ session: CSSession!, changedState newState: CSSessionState) {
-        print("Session changed state to: \(newState.rawValue)")
     }
 }
 
