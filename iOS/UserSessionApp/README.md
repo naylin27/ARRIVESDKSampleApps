@@ -20,7 +20,7 @@ Register for an account at [Curbside Platform](https://dashboard.curbside.com). 
 * Grant permission to use location services
 * Add a tracking identifier
 * Add a track token
-* Add a [site identifier](https://dashboard.curbside.com/account?accountTab=sites) that was created on the [ARRIVE dashboard](https://dashboard.curbside.com)
+* Add a [site identifier](https://dashboard.curbside.com/account?accountTab=sites) that was created on the Curbside Platform.
 * Tap “Start Tracking Site”
 * Go on a test drive
 
