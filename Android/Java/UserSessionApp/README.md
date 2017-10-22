@@ -7,7 +7,7 @@ This sample app demonstrates how to integrate the ARRIVE SDK with an Android app
 
 ### Prerequisites
 
-Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) and sign in to the platform. Do the following:
+Register for an account at [Curbside Platform](https://dashboard.curbside.com/). Sign in and do the following::
 
 * Generate a [usage token](https://dashboard.curbside.com/account?accessTab=tokens&accountTab=access)
 * Create a [site](https://dashboard.curbside.com/account?accountTab=sites)
