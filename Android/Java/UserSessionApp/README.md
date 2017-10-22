@@ -1,6 +1,7 @@
 # User Session Sample App
 
 The ARRIVE SDK delivers reliable arrival prediction. Battle-tested by millions of customer arrivals in real world commerce, ARRIVE sends an accurate alert before arrival and gives you true visibility into customer ETA and dwell time. ARRIVE hooks easily into mobile commerce infrastructure and on-site apps or POS for notifications.
+
 This sample app demonstrates how to integrate the ARRIVE SDK with an Android app using the Java Programming Language. Run the sample app on a device before doing a drive test.
 
 
@@ -8,8 +9,8 @@ This sample app demonstrates how to integrate the ARRIVE SDK with an Android app
 
 Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) and sign in to the platform. Do the following:
 
-* Generate usage token
-* Create a site
+* Generate a [usage token](https://dashboard.curbside.com/account?accessTab=tokens&accountTab=access)
+* Create a [site](https://dashboard.curbside.com/account?accountTab=sites)
 
 ### Installing
 
@@ -23,9 +24,9 @@ Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) a
 * Add the generated usage token in place of the USAGE_TOKEN defined in the MainActivity of the project
 * Run the app
 * Grant permission to use location services
-* Enter tracking identifier
-* Enter track token
-* Enter site identifier that was created on the ARRIVE dashboard
+* Enter a tracking identifier
+* Enter a track token
+* Enter a [site identifier](https://dashboard.curbside.com/account?accountTab=sites) that was created on the Curbside Platform
 * Tap "Register Tracking Id".
 * Once "Register Tracking Id" is successful, tap “Start Trip”.
 * Go on a test drive.
