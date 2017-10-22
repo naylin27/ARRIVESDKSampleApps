@@ -1,6 +1,7 @@
 # Monitoring Session Sample App
 
 The ARRIVE SDK delivers reliable arrival prediction. Battle-tested by millions of customer arrivals in real world commerce, ARRIVE sends an accurate alert before arrival and gives you true visibility into customer ETA and dwell time. ARRIVE hooks easily into mobile commerce infrastructure and on-site apps or POS for notifications.
+
 This sample app integrates with the ARRIVE SDK. It is an example of a monitor app that demonstrates the ability of ARRIVE to accurately detect not only where a user is, but when the user is about to arrive.
 
 
@@ -10,7 +11,7 @@ Register for an account at [Curbside Platform](https://dashboard.curbside.com). 
 * Generate an [API Key and Secret](https://dashboard.curbside.com/account?accessTab=keys&accountTab=access)
 
 ## Installing
-* The recommended way to install the SDK is using [CocoaPods](https://cocoapods.org/
+* The recommended way to install the SDK is using [CocoaPods](https://cocoapods.org/)
   * Run pod install from the command line for the initial install.
   * Open MonitorApp.xcworkspace.
 * Add [API Key and Secret](https://dashboard.curbside.com/account?accessTab=keys&accountTab=access) in place of YOUR_API_KEY and YOUR_SECRET_KEY in the AppDelegate file.
