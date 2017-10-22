@@ -1,10 +1,13 @@
-# Android Sample App
+# User Session Sample App
 
-This sample app demonstrates how to integrate Curbside SDK with an android app using the Java Programming Language. Run the sample app on a device before doing a drive test.
+The ARRIVE SDK delivers reliable arrival prediction. Battle-tested by millions of customer arrivals in real world commerce, ARRIVE sends an accurate alert before arrival and gives you true visibility into customer ETA and dwell time. ARRIVE hooks easily into mobile commerce infrastructure and on-site apps or POS for notifications.
+This sample app demonstrates how to integrate the ARRIVE SDK with an Android app using the Java Programming Language. Run the sample app on a device before doing a drive test.
+
 
 ### Prerequisites
 
-Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) and log into ARRIVE dashboard. Do the following:
+Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) and sign in to the platform. Do the following:
+
 * Generate usage token
 * Create a site
 
@@ -14,29 +17,29 @@ Register for an account at [ARRIVE dashboard](https://dashboard.curbside.com/) a
 * Open the project in the Android Studio. 
 * [Download](https://developer.curbside.com/downloads/) the ARRIVE Android SDK.
 * Add the dowloaded aar file in your libs folder.
-* Add the dependencies in the gradle file. Please refer to [QuickStart Documentation](https://developer.curbside.com/docs/getting-started/quickstart-android-transmit-app/) for detailed information on how to integrate sdk with your app.
-* Compile the app. It should compile successfully.
+* Add the dependencies in the gradle file. See [Android App Quick Start](https://developer.curbside.com/docs/getting-started/quickstart-android-app/) for detailed information on how to integrate sdk with your app.
 
 ## Running
-* Add the generated usage token in place of `USAGE_TOKEN` defined in the MainActivity of the project. 
-* Run the app 
-* Grant permission to use location services.
+* Add the generated usage token in place of the USAGE_TOKEN defined in the MainActivity of the project
+* Run the app
+* Grant permission to use location services
 * Enter tracking identifier
 * Enter track token
-* Enter site identifier that was created on ARRIVE dashboard
+* Enter site identifier that was created on the ARRIVE dashboard
 * Tap "Register Tracking Id".
 * Once "Register Tracking Id" is successful, tap “Start Trip”.
 * Go on a test drive.
-* You can cancel the trip by tapping "Cancel Trip". Note: For starting new trip, enter new track token, as once complete trip is called on a track token, it cannot be reused.
-* You can also unregister you tracking Id by tapping "Unregister Tracking Id".
-* Once you are near the site, you can also notify monitoring user by tapping "Notify Monitoring Session User".
+* You can cancel the trip by tapping "Cancel Trip". Note: To start a new trip, enter a new track token. Once a complete trip is called on a track token, it cannot be reused.
+* You can also unregister you tracking ID by tapping "Unregister Tracking Id".
+* When you are near the site, you can also notify the user of the monitor app by tapping "Notify Monitoring Session User".
 
-## View user trip
-* Check [ARRIVE dashboard](https://dashboard.curbside.com/) to see your current location and your status change from in-transit to arrived.
-* Visit [ARRIVE dashboard](https://dashboard.curbside.com/) to get an overview of all your sites and trips.
 
-## Quickstart
-Refer to [Quickstart](https://developer.curbside.com/docs/getting-started/quickstart-android-transmit-app/) to integrate ARRIVE into an existing project.
+## View User trip
+* Check the [ARRIVE dashboard](https://dashboard.curbside.com/) to see your current location and your trip status change from In-Transit to Arrived.
+* Visit the [ARRIVE dashboard](https://dashboard.curbside.com/)  to get aggregate data and statistics about your sites and trips.
+
+## Quick Start Guide
+See [Android App Quick Start](https://developer.curbside.com/docs/getting-started/quickstart-android-app/) to integrate ARRIVE with an existing project.
 
 ## Android SDK Reference Docs
 https://developer.curbside.com/docs/reference/android/index.html
