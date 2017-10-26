@@ -45,9 +45,9 @@
         customerName = userStatusUpdate.trackingIdentifier;
     _customerNameTIDLabel.text = customerName;
     int distanceFromSite = userStatusUpdate.distanceFromSite;
-    _distanceValueLabel.text = FormatDistance(userStatusUpdate.distanceFromSite);
+    _distanceValueLabel.text = monitor_FormatDistance(userStatusUpdate.distanceFromSite);
     int eta = userStatusUpdate.estimatedTimeOfArrival;
-    _etaValueLabel.text = eta > 0 ?  FormatSeconds(eta) : @"-";
+    _etaValueLabel.text = eta > 0 ?  monitor_FormatSeconds(eta) : @"-";
     _dateValueLabel.text = FormatDate(userStatusUpdate.lastUpdateTimestamp);
     switch (_userStatusUpdate.userStatus) {
         case CSUserStatusArrived:

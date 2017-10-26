@@ -11,6 +11,6 @@
 static NSString *kTrackingIdentifierKey = @"TrackingIdentifier";
 static NSString *kSiteIdentifierKey = @"SiteIdentifier";
 
-extern NSString *FormatDistance(float distance);
-extern NSString *FormatSeconds(int totalSeconds);
+extern NSString *monitor_FormatDistance(float distance);
+extern NSString *monitor_FormatSeconds(int totalSeconds);
 extern NSString *FormatDate(NSDate *date);
