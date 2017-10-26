@@ -52,11 +52,11 @@ class CustomerTableViewCell: UITableViewCell {
         }
         
         // set distance
-        distanceValueLabel.text = FormatDistance(Float(userStatusUpdate.distanceFromSite))
+        distanceValueLabel.text = monitor_FormatDistance(Float(userStatusUpdate.distanceFromSite))
         
         // set eta
         let eta = userStatusUpdate.estimatedTimeOfArrival
-        etaValueLabel.text = eta > 0 ? FormatSeconds(eta) : "-"
+        etaValueLabel.text = eta > 0 ? monitor_FormatSeconds(eta) : "-"
         
         // set date
         dateValueLabel.text = FormatDate(userStatusUpdate.lastUpdateTimestamp)

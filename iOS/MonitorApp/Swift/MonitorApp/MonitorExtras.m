@@ -10,7 +10,7 @@
 
 @import MapKit;
 
-NSString *FormatDistance(float distance)
+NSString *monitor_FormatDistance(float distance)
 {
     static MKDistanceFormatter *_distanceFormatter = nil;
     static dispatch_once_t once = 0;
@@ -22,7 +22,7 @@ NSString *FormatDistance(float distance)
     return [_distanceFormatter stringFromDistance:distance];
 }
 
-NSString *FormatSeconds(int totalSeconds)
+NSString *monitor_FormatSeconds(int totalSeconds)
 {
     totalSeconds = abs(totalSeconds);
     float hours = floor(totalSeconds / 3600);
