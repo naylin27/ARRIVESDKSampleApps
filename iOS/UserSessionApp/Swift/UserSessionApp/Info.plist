@@ -22,6 +22,10 @@
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>UserSessionApp needs Always authorization</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>UserSessionApp needs Always authorization</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>UserSessionApp needs Always authorization</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
