@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 @import Curbside;
+@import UserNotifications;
 
 @interface ViewController () <CSUserSessionDelegate>
 {
@@ -127,6 +128,21 @@
     [self _updateButtons];
 }
 
+- (void)_showLocalNotificationWithTitle:(NSString *)title body:(NSString *)body
+{
+    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+    content.title = title;
+    content.body = body;
+    content.sound = [UNNotificationSound defaultSound];
+    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:2 repeats:NO];
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"AlertIdentifier" content:content trigger:trigger];
+    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Something went wrong: %@",error);
+        }
+    }];
+}
+
 #pragma mark CSUserSessionDelegate
 
 - (void)session:(CSSession *)session changedState:(CSSessionState)newState
@@ -141,12 +157,16 @@
 {
     NSString *trackingIdentifier = [CSUserSession currentSession].trackingIdentifier;
     _statusLabel.text = [NSString stringWithFormat:@"%@ arrived at site %@",trackingIdentifier, site.siteIdentifier];
+    
+    [self _showLocalNotificationWithTitle:@"Arrival Notificaton!" body:[NSString stringWithFormat:@"Arrived at site %@",site.siteIdentifier]];
 }
 
 - (void)session:(CSUserSession *)session userApproachingSite:(CSSite *)site
 {
     NSString *trackingIdentifier = [CSUserSession currentSession].trackingIdentifier;
     _statusLabel.text = [NSString stringWithFormat:@"%@ approaching site %@",trackingIdentifier, site.siteIdentifier];
+    
+    [self _showLocalNotificationWithTitle:@"Approaching Notificaton!" body:[NSString stringWithFormat:@"Approaching site %@",site.siteIdentifier]];
 }
 
 - (void)session:(CSUserSession *)session encounteredError:(NSError *)error forOperation:(CSUserSessionAction)customerSessionAction

@@ -8,8 +8,9 @@
 
 #import "AppDelegate.h"
 @import Curbside;
+@import UserNotifications;
 
-@interface AppDelegate ()
+@interface AppDelegate () <UNUserNotificationCenterDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
@@ -28,6 +29,16 @@
     // Call sessions method application:didFinishLaunchingWithOptions:
     [sdksession application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:launchOptions];
     
+    // Request authorization to show notifications
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    center.delegate = self;
+    UNAuthorizationOptions options = UNAuthorizationOptionAlert + UNAuthorizationOptionSound;
+    [center requestAuthorizationWithOptions:options
+                          completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                              if (!granted) {
+                                  NSLog(@"Something went wrong");
+                              }
+                          }];
     
     return YES;
 }
@@ -56,6 +67,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - UNUserNotificationCenterDelegate
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+{
+    completionHandler(UNNotificationPresentationOptionBadge + UNNotificationPresentationOptionSound + UNNotificationPresentationOptionAlert);
 }
 
 @end
