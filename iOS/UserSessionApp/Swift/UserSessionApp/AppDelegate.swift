@@ -9,6 +9,7 @@
 import UIKit
 import Curbside
 import CoreLocation
+import UserNotifications
 
 let kSessionValidatedNotificationName = "SessionValidatedNotificationName"
 
@@ -28,8 +29,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Request always authorization
         locationManager.requestAlwaysAuthorization()
         
+        // Request authorization to show notifications
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        let options: UNAuthorizationOptions = [UNAuthorizationOptions.alert, UNAuthorizationOptions.sound]
+        center.requestAuthorization(options: options) { (granted, error) in
+            if (!granted) {
+                print("Something went wrong");
+            }
+        }
+        
         return true
     }
     
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.sound, .alert])
+    }
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import Curbside
+import UserNotifications
 
 class ViewController: UIViewController, CSUserSessionDelegate {
     
@@ -109,6 +110,20 @@ class ViewController: UIViewController, CSUserSessionDelegate {
         }
         updateButtons()
     }
+    
+    func showLocalNotification(title: String, body: String) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body;
+        content.sound = UNNotificationSound.default()
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+        let request = UNNotificationRequest(identifier: "AlertIdentifier", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = (error as NSError?) {
+                print("Something went wrong: \(error.localizedDescription)")
+            }
+        }
+    }
 
     // MARK: - CSUserSessionDelegate
     
@@ -126,11 +141,15 @@ class ViewController: UIViewController, CSUserSessionDelegate {
     func session(_ session: CSUserSession, userArrivedAt site: CSSite) {
         guard let trackingIdentifier = CSUserSession.current().trackingIdentifier else { return }
         statusLabel.text = "\(trackingIdentifier) arrived at site \(site.siteIdentifier)"
+        
+        showLocalNotification(title: "Arrival Notificaton!", body: "Arrived at site \(site.siteIdentifier)")
     }
     
     func session(_ session: CSUserSession, userApproachingSite site: CSSite) {
         guard let trackingIdentifier = CSUserSession.current().trackingIdentifier else { return }
         statusLabel.text = "\(trackingIdentifier) approaching at site \(site.siteIdentifier)"
+        
+        showLocalNotification(title: "Approaching Notificaton!", body: "Approaching site \(site.siteIdentifier)")
     }
     
     func session(_ session: CSUserSession, encounteredError error: Error, forOperation customerSessionAction: CSUserSessionAction) {
