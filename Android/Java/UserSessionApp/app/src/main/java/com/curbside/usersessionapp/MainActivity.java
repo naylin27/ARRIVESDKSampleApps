@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.curbside.sdk.CSErrorCode;
 import com.curbside.sdk.CSSite;
 import com.curbside.sdk.CSUserSession;
-import com.curbside.sdk.CSUserStatus;
 import com.curbside.sdk.credentialprovider.TokenCurbsideCredentialProvider;
 import com.curbside.sdk.event.Event;
 import com.curbside.sdk.event.Path;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String siteIdentifier = null;
     private String siteIdentifierToNotifyMonitoringUser = null;
 
-    private Subscription stopTripSubscription = null;
+    private Subscription completeTripSubscription = null;
     private Subscription userArrivedAtSiteSubscription = null;
 
     @Override
@@ -219,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //subscribe to the event on the eventBus
                 CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.START_TRIP).subscribe(startTripEventObserver);
 
-                //start tripbsto
+                //start trip
                 CSUserSession.getInstance().startTripToSiteWithIdentifier(siteIdentifier, trackToken);
 
                 break;
@@ -330,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if(site != null) {
                         showNotification(site);
                         //create an observer for listening complete trip event
-                        final Action1<Event> stopTripSiteEventObserver = new Action1<Event>() {
+                        final Action1<Event> completeTripSiteEventObserver = new Action1<Event>() {
                             @Override
                             public void call(final Event event) {
                                 if (event.status == Status.SUCCESS) {
@@ -346,14 +345,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     tvLabel.setTextColor(getResources().getColor(R.color.colorRed));
                                 }
 
-                                if (stopTripSubscription != null)
-                                    stopTripSubscription.unsubscribe();
+                                if (completeTripSubscription != null)
+                                    completeTripSubscription.unsubscribe();
                             }
                         };
 
                         //subscribe to the event on the eventBus
-                        stopTripSubscription =
-                                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.COMPLETE_TRIP).subscribe(stopTripSiteEventObserver);
+                        completeTripSubscription =
+                                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.COMPLETE_TRIP).subscribe(completeTripSiteEventObserver);
 
                         CSUserSession.getInstance().completeTripToSiteWithIdentifier(site.getSiteIdentifier(), null);
                     }
