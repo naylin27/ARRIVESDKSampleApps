@@ -18,6 +18,11 @@ class ConfigureViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         startUpdatesButton.layer.cornerRadius = 4.0
+        siteIdentifierTextField.delegate = self
+        trackingIdentifierTextField.delegate = self
+        
+        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     @IBAction func startUpdates(_ sender: Any) {
@@ -42,5 +47,23 @@ class ConfigureViewController: UIViewController {
         
         dismiss(animated: true, completion: nil)
     }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
 
+}
+
+extension ConfigureViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == trackingIdentifierTextField {
+            siteIdentifierTextField.becomeFirstResponder()
+        } else if textField == siteIdentifierTextField {
+            dismissKeyboard()
+            startUpdates(self)
+        } else {
+            dismissKeyboard()
+        }
+        return true
+    }
 }
