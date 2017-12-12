@@ -238,8 +238,8 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="StopMockTrip:" destination="4mL-wJ-bp1" eventType="touchUpInside" id="MIq-NZ-b91"/>
                                     <action selector="startTracking:" destination="BYZ-38-t0r" eventType="touchUpInside" id="G6m-aO-Mey"/>
+                                    <action selector="stopMockTrip:" destination="4mL-wJ-bp1" eventType="touchUpInside" id="na2-wk-Vx3"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7u-oo-vVf">

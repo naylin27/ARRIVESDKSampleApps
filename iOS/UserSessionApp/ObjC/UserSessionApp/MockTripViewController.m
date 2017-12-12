@@ -51,8 +51,20 @@
         return;
     }
     
-    double lat = _latitudeField.text.doubleValue;
-    double lng = _longitudeField.text.doubleValue;
+    NSString *latString = [_latitudeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (latString.length == 0) {
+        _errorTitleLabel.text = @"Empty latitude";
+        return;
+    }
+    
+    NSString *lngString = [_longitudeField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (lngString.length == 0) {
+        _errorTitleLabel.text = @"Empty longitude";
+        return;
+    }
+    
+    double lat = latString.doubleValue;
+    double lng = lngString.doubleValue;
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(lat, lng);
     if (!CLLocationCoordinate2DIsValid(coordinate)) {
         _errorTitleLabel.text = @"Invalid coordinates";
@@ -63,7 +75,7 @@
     [[CSUserSession currentSession] startMockTripToSiteWithIdentifier:siteid fromLocation:[[CLLocation alloc] initWithLatitude:lat longitude:lng]];
 }
 
-- (IBAction)StopMockTrip:(UIButton *)sender {
+- (IBAction)stopMockTrip:(UIButton *)sender {
     [[CSUserSession currentSession] cancelMockTrip];
 }
 
@@ -72,10 +84,6 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
 {
     CLLocation *location = locations.lastObject;
-    if (!location) {
-        NSLog(@"%s, no location", __PRETTY_FUNCTION__);
-        return;
-    }
     CLLocationDegrees lat = location.coordinate.latitude;
     CLLocationDegrees lng = location.coordinate.longitude;
     _latitudeField.text = [NSString stringWithFormat:@"%f", lat];
