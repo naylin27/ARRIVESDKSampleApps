@@ -13,6 +13,7 @@
 		343B561C1F5CEBD800FDC32E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 343B561A1F5CEBD800FDC32E /* Main.storyboard */; };
 		343B561E1F5CEBD800FDC32E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 343B561D1F5CEBD800FDC32E /* Assets.xcassets */; };
 		343B56211F5CEBD800FDC32E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 343B561F1F5CEBD800FDC32E /* LaunchScreen.storyboard */; };
+		C8F86DAE1FE0685B00F467CF /* MockTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F86DAD1FE0685B00F467CF /* MockTripViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		343B561D1F5CEBD800FDC32E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		343B56201F5CEBD800FDC32E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		343B56221F5CEBD800FDC32E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8F86DAC1FE0685B00F467CF /* MockTripViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockTripViewController.h; sourceTree = "<group>"; };
+		C8F86DAD1FE0685B00F467CF /* MockTripViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockTripViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 				343B56151F5CEBD800FDC32E /* AppDelegate.m */,
 				343B56171F5CEBD800FDC32E /* ViewController.h */,
 				343B56181F5CEBD800FDC32E /* ViewController.m */,
+				C8F86DAC1FE0685B00F467CF /* MockTripViewController.h */,
+				C8F86DAD1FE0685B00F467CF /* MockTripViewController.m */,
 				343B561A1F5CEBD800FDC32E /* Main.storyboard */,
 				343B561D1F5CEBD800FDC32E /* Assets.xcassets */,
 				343B561F1F5CEBD800FDC32E /* LaunchScreen.storyboard */,
@@ -159,6 +164,7 @@
 				343B56191F5CEBD800FDC32E /* ViewController.m in Sources */,
 				343B56161F5CEBD800FDC32E /* AppDelegate.m in Sources */,
 				343B56131F5CEBD800FDC32E /* main.m in Sources */,
+				C8F86DAE1FE0685B00F467CF /* MockTripViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
