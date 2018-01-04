@@ -143,6 +143,9 @@ class ViewController: UIViewController, CSUserSessionDelegate {
         statusLabel.text = "\(trackingIdentifier) arrived at site \(site.siteIdentifier)"
         
         showLocalNotification(title: "Arrival Notificaton!", body: "Arrived at site \(site.siteIdentifier)")
+        
+        // Complete the trip.
+        session.completeTripToSite(withIdentifier: site.siteIdentifier, trackToken: nil)
     }
     
     func session(_ session: CSUserSession, userApproachingSite site: CSSite) {
