@@ -159,6 +159,9 @@
     _statusLabel.text = [NSString stringWithFormat:@"%@ arrived at site %@",trackingIdentifier, site.siteIdentifier];
     
     [self _showLocalNotificationWithTitle:@"Arrival Notificaton!" body:[NSString stringWithFormat:@"Arrived at site %@",site.siteIdentifier]];
+    
+    // Complete the trip.
+    [session completeTripToSiteWithIdentifier:site.siteIdentifier trackToken:nil];
 }
 
 - (void)session:(CSUserSession *)session userApproachingSite:(CSSite *)site
