@@ -2,12 +2,19 @@ package com.curbside.usersessionapp;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +32,7 @@ import com.curbside.sdk.event.Type;
 import java.util.Arrays;
 import java.util.Set;
 
+import rx.Subscription;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -52,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String trackToken = null;
     private String siteIdentifier = null;
     private String siteIdentifierToNotifyMonitoringUser = null;
+
+    private Subscription completeTripSubscription = null;
+    private Subscription userArrivedAtSiteSubscription = null;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -193,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             bStartTrip.setAlpha(ALPHA);
 
                             createObserverToCheckIfCanNotifyMonitoringSessionUser();
+                            createObserverToCheckIfUserArrived();
                         }
                         else if (event.status == Status.FAILURE) {
                             tvLabel.setText(String.format("Failure in start trip due to: %s", (CSErrorCode)event.object));
@@ -306,6 +318,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void createObserverToCheckIfUserArrived() {
+        final Action1<Event> userArrivedAtSiteEvent = new Action1<Event>() {
+            @Override
+            public void call(com.curbside.sdk.event.Event event) {
+                if(event.status == Status.TRUE) {
+                    Log.d(TAG, "User has arrived at site");
+
+                    final CSSite site = (CSSite) event.object;
+                    if(site != null) {
+                        showNotification(site);
+                        //create an observer for listening complete trip event
+                        final Action1<Event> completeTripSiteEventObserver = new Action1<Event>() {
+                            @Override
+                            public void call(final Event event) {
+                                if (event.status == Status.SUCCESS) {
+                                    //Cannot start trip on track token on which complete track was called
+                                    tvLabel.setText(String.format("Successfully completed trip"));
+                                    tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                                    bStartTrip.setEnabled(true);
+                                    bStartTrip.setAlpha(NO_ALPHA);
+
+                                    showAlertDialogBox();
+                                } else if (event.status == Status.FAILURE) {
+                                    tvLabel.setText(String.format("Failure in completing trip due to: %s", (CSErrorCode) event.object));
+                                    tvLabel.setTextColor(getResources().getColor(R.color.colorRed));
+                                }
+
+                                if (completeTripSubscription != null)
+                                    completeTripSubscription.unsubscribe();
+                            }
+                        };
+
+                        //subscribe to the event on the eventBus
+                        completeTripSubscription =
+                                CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.COMPLETE_TRIP).subscribe(completeTripSiteEventObserver);
+
+                        CSUserSession.getInstance().completeTripToSiteWithIdentifier(site.getSiteIdentifier(), null);
+                    }
+                }
+            }
+        };
+
+        //subscribe to the event
+        if(userArrivedAtSiteSubscription == null || userArrivedAtSiteSubscription.isUnsubscribed()) {
+            userArrivedAtSiteSubscription =
+                    CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.ARRIVED_AT_SITE).subscribe(userArrivedAtSiteEvent);
+        }
+    }
+
     private void showAlertDialogBox() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
@@ -363,5 +424,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //subscribe to the event
         CSUserSession.getInstance().getEventBus().getObservable(Path.USER, Type.CAN_NOTIFY_MONITORING_USER_AT_SITE).subscribe(canNotifyMonitoringUserAtSiteEventObserver);
+    }
+
+    private void showNotification(final CSSite site) {
+        final String message = String.format("You have arrived at %s", site.getSiteIdentifier());
+
+        final Intent notificationIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        final PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0 /*request Id*/, notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        final NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this)
+                        .setContentTitle("Pie Tracker Notification")
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentIntent(pendingIntent)
+                        .setContentText(message)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setPriority(Notification.PRIORITY_HIGH);
+
+        final NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(1 /*notifyID*/, builder.build());
     }
 }
