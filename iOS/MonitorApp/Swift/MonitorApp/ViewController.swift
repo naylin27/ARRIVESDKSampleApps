@@ -48,6 +48,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         userDefaults.synchronize()
         
         CSMonitoringSession.current().stopMonitoringArrivals()
+        customerStatusUpdates.removeAll()
+        customersTableView.reloadData()
         showSetupViewController()
     }
     
@@ -108,7 +110,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func session(_ session: CSMonitoringSession, encounteredError error: Error) {
         guard let error = (error as NSError?) else { return }
         print("Encountered Error: \(error.description)")
-        let alertController = UIAlertController.init(title: "Error", message: error.description, preferredStyle: .alert)
+        let alertController = UIAlertController.init(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         alertController.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
