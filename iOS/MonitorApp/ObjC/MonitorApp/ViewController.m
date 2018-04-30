@@ -43,6 +43,8 @@
     [userDefaults synchronize];
     
     [[CSMonitoringSession currentSession] stopMonitoringArrivals];
+    _customerLocationUpdates = nil;
+    [_customersTableView reloadData];
     [self _showSetupViewController];
 }
 
@@ -140,7 +142,7 @@
 - (void)session:(CSMonitoringSession *)session encounteredError:(NSError *)error
 {
     NSLog(@"Encountered Error : %@",error);
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error.description preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
