@@ -442,7 +442,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final String CHANNEL_NAME = "USER_SESSION_APP_CHANNEL";
 
             final NotificationChannel notificationChannel =
-                    new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_MAX);
+                    new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
 
             final NotificationManager notificationManager =
                     (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
