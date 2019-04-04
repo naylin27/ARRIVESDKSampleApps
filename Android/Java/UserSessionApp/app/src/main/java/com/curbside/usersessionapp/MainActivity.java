@@ -414,13 +414,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void call(com.curbside.sdk.event.Event event) {
                 if(event.status == Status.TRUE) {
-                    final Set<String> siteIds = CSUserSession.getInstance().getSitesToNotifyMonitoringSessionUserOfArrival();
-                    if (siteIds.size() > 0) {
+                    final CSSite site = (CSSite) event.object;
+                    if (site != null) {
                         tvLabel.setText(String.format("Can Notify Monitoring Session User Now!"));
                         tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                         bNotifyMonitoringSessionUser.setEnabled(true);
                         bNotifyMonitoringSessionUser.setAlpha(NO_ALPHA);
-                        siteIdentifierToNotifyMonitoringUser = siteIds.iterator().next();
+                        siteIdentifierToNotifyMonitoringUser = site.getSiteIdentifier();
                     } else {
                          tvLabel.setText("User still in transit to the site");
                     }
