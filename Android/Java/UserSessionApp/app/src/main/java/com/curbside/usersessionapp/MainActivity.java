@@ -12,10 +12,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +30,9 @@ import com.curbside.sdk.event.Event;
 import com.curbside.sdk.event.Path;
 import com.curbside.sdk.event.Status;
 import com.curbside.sdk.event.Type;
+import com.curbside.sdk.model.CSUserInfo;
 
 import java.util.Arrays;
-import java.util.Set;
 
 import rx.Subscription;
 import rx.functions.Action1;
@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText etTrackingIdentifier = null;
     private EditText etTrackToken = null;
     private EditText etSiteIdentifier = null;
+    private EditText etName = null;
+    private EditText etEmail= null;
+    private EditText etPhoneNumber = null;
+    private EditText etCarMake = null;
+    private EditText etCarModel = null;
+    private EditText etLicensePlate = null;
 
     private Button bRegisterTrackingId = null;
     private Button bStartTrip = null;
@@ -62,6 +68,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String trackToken = null;
     private String siteIdentifier = null;
     private String siteIdentifierToNotifyMonitoringUser = null;
+
+    private CSUserInfo userInfo = null;
+    private String name = null;
+    private String email = null;
+    private String phoneNumber = null;
+    private String licensePlate = null;
+    private String carMake = null;
+    private String carModel = null;
 
     private Subscription completeTripSubscription = null;
     private Subscription userArrivedAtSiteSubscription = null;
@@ -78,6 +92,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etTrackingIdentifier = (EditText) findViewById(R.id.etTrackingIdentifier);
         etTrackToken = (EditText) findViewById(R.id.etTrackToken);
         etSiteIdentifier = (EditText) findViewById(R.id.etSiteIdentifier);
+        etName = (EditText) findViewById(R.id.etName);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
+        etCarMake = (EditText) findViewById(R.id.etCarMake);
+        etCarModel = (EditText) findViewById(R.id.etCarModel);
+        etLicensePlate = (EditText) findViewById(R.id.etLicensePlate);
 
         bRegisterTrackingId = (Button) findViewById(R.id.bRegisterTrackingId);
         bRegisterTrackingId.setOnClickListener(this);
@@ -140,6 +160,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.bRegisterTrackingId:
                 trackingIdentifier = etTrackingIdentifier.getText().toString();
+
+                //set CSUserInfo
+                name = etName.getText().toString();
+                email = etEmail.getText().toString();
+                phoneNumber = etPhoneNumber.getText().toString();
+                licensePlate = etLicensePlate.getText().toString();
+                carMake = etCarMake.getText().toString();
+                carModel = etCarModel.getText().toString();
+
+                if(!carModel.isEmpty() || !carModel.isEmpty() || !licensePlate.isEmpty()){
+                    userInfo = new CSUserInfo(name, email, phoneNumber, licensePlate, carMake, carModel);
+                } else{
+                    userInfo = new CSUserInfo(name, email, phoneNumber);
+                }
+
                 if(trackingIdentifier == null || trackingIdentifier.isEmpty()) {
                     tvLabel.setText("Please enter tracking Id");
                     tvLabel.setTextColor(getResources().getColor(R.color.colorRed));
@@ -151,6 +186,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void call(final Event event) {
                         if (event.status == Status.SUCCESS) {
+                            CSUserSession.getInstance().setUserInfo(userInfo);
+
                             tvLabel.setText(String.format("Successfully registered tracking id"));
                             tvLabel.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
