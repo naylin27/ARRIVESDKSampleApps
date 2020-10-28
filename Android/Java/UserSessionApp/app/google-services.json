@@ -1,147 +1,37 @@
 {
   "project_info": {
-    "project_number": "74942820615",
-    "firebase_url": "https://western-trilogy-679-275bf.firebaseio.com",
-    "project_id": "western-trilogy-679"
+    "project_number": "1095285600357",
+    "firebase_url": "https://sample-4942a.firebaseio.com",
+    "project_id": "sample-4942a",
+    "storage_bucket": "sample-4942a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:74942820615:android:062fb5314e7bb51a",
-        "android_client_info": {
-          "package_name": "com.test.pietracker"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "74942820615-u28ftgrp5thj06uq9da71ipukrlbq7d3.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "74942820615-bj7c14l8n6vchenthq1fqksi2l19k5vf.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCL9hdLFDSlCWjKn-XUkKqC4E7Wp0nHUyU"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:74942820615:android:899537a9fb55cd9a",
-        "android_client_info": {
-          "package_name": "com.curbside.nCurbside"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "74942820615-u28ftgrp5thj06uq9da71ipukrlbq7d3.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "74942820615-bj7c14l8n6vchenthq1fqksi2l19k5vf.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCL9hdLFDSlCWjKn-XUkKqC4E7Wp0nHUyU"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:74942820615:android:1acc686d8c7fc640",
-        "android_client_info": {
-          "package_name": "com.curbside.nCap"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "74942820615-u28ftgrp5thj06uq9da71ipukrlbq7d3.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "74942820615-bj7c14l8n6vchenthq1fqksi2l19k5vf.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCL9hdLFDSlCWjKn-XUkKqC4E7Wp0nHUyU"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:74942820615:android:5d6a8ffc959ca3dc",
+        "mobilesdk_app_id": "1:1095285600357:android:600120c61894a1bbb3968c",
         "android_client_info": {
           "package_name": "com.curbside.usersessionapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "74942820615-u28ftgrp5thj06uq9da71ipukrlbq7d3.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "74942820615-bj7c14l8n6vchenthq1fqksi2l19k5vf.apps.googleusercontent.com",
+          "client_id": "1095285600357-md3dbbe3g7jq7bg1bsbhignju9pde1e9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCL9hdLFDSlCWjKn-XUkKqC4E7Wp0nHUyU"
+          "current_key": "AIzaSyD2nFMq3k8oyERvUFy6NVdv8NlsN5gzacg"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095285600357-md3dbbe3g7jq7bg1bsbhignju9pde1e9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
