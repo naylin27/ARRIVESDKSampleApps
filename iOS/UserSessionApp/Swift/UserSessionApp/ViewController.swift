@@ -24,8 +24,8 @@ class ViewController: UIViewController, CSUserSessionDelegate {
     @IBOutlet var statusLabel: UILabel!
     @IBOutlet var trackingIdentifierButton: UIButton!
     @IBOutlet var trackingButton: UIButton!
-
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         statusLabel.text = ""
         isStartTrack = true
@@ -34,17 +34,16 @@ class ViewController: UIViewController, CSUserSessionDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.sessionValidated(notification:)), name: NSNotification.Name.init(rawValue: kSessionValidatedNotificationName), object: nil)
-        resetError()
         CSUserSession.current().delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.removeObserver(self)
+            super.viewWillDisappear(animated)
+            NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func sessionValidated(notification: Notification) {
-        if let trackingIdentifier = CSUserSession.current().trackingIdentifier, !(trackingIdentifier.characters.isEmpty) {
+        if let trackingIdentifier = CSUserSession.current().trackingIdentifier, !(trackingIdentifier.isEmpty) {
             tidTextField.text = trackingIdentifier
             hasTrackingID = true
         } else {
@@ -73,49 +72,49 @@ class ViewController: UIViewController, CSUserSessionDelegate {
     }
     
     private func updateButtons() {
-        trackingIdentifierButton.setTitle(hasTrackingID ? "Unregister Tracking Identfier" : "Set Tracking Identifier", for: .normal)
-        trackingButton.setTitle(isStartTrack ? "Start Tracking Site" : "Stop Tracking Site", for: .normal)
-    }
-
-    @IBAction func startTracking(_ sender: Any) {
-        resetError()
-        let trackingIdentifier = tidTextField.text ?? ""
-        let trackToken = trackTokenField.text ?? ""
-        let siteIdentifier = siteIdentierField.text ?? ""
-        
-        if isStartTrack {
-            if (trackingIdentifier.characters.count == 0) {
-                errorTitleLabel.text = "Empty Tracking Identifier.";
-                return;
-            }
+          trackingIdentifierButton.setTitle(hasTrackingID ? "Unregister Tracking Identfier" : "Set Tracking Identifier", for: .normal)
+          trackingButton.setTitle(isStartTrack ? "Start Tracking Site" : "Stop Tracking Site", for: .normal)
+      }
+    
+    @IBAction func toggleTracking(_ sender: Any) {
+            resetError()
+            let trackingIdentifier = tidTextField.text ?? ""
+            let trackToken = trackTokenField.text ?? ""
+            let siteIdentifier = siteIdentierField.text ?? ""
             
-            if (trackToken.characters.count == 0) {
-                errorTitleLabel.text = "Empty track token.";
-                return;
-            }
-            
-            if (siteIdentifier.characters.count == 0) {
-                errorTitleLabel.text = "Empty site Identifier.";
-                return;
-            }
-            CSUserSession.current().startTripToSite(withIdentifier: siteIdentifier, trackToken: trackToken)
-        } else {
-            let trackToken = trackTokenField.text
-            CSUserSession.current().cancelTripToSite(withIdentifier: siteIdentifier, trackToken: trackToken)
-            
-            siteIdentierField.text = nil
-            trackTokenField.text = nil
-            isStartTrack = true
-            
+            if isStartTrack {
+                if (trackingIdentifier.count == 0) {
+                    errorTitleLabel.text = "Empty Tracking Identifier.";
+                    return;
+                }
+                
+                if (trackToken.count == 0) {
+                    errorTitleLabel.text = "Empty track token.";
+                    return;
+                }
+                
+                if (siteIdentifier.count == 0) {
+                    errorTitleLabel.text = "Empty site Identifier.";
+                    return;
+                }
+                CSUserSession.current().startTripToSite(withIdentifier: siteIdentifier, trackToken: trackToken)
+            } else {
+                let trackToken = trackTokenField.text
+                CSUserSession.current().completeTripToSite(withIdentifier: siteIdentifier, trackToken: trackToken)
+                
+                siteIdentierField.text = nil
+                trackTokenField.text = nil
+                isStartTrack = true
+                
+            }   
+            updateButtons()
         }
-        updateButtons()
-    }
     
     func showLocalNotification(title: String, body: String) {
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body;
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
         let request = UNNotificationRequest(identifier: "AlertIdentifier", content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request) { (error) in
@@ -124,63 +123,64 @@ class ViewController: UIViewController, CSUserSessionDelegate {
             }
         }
     }
-
+    
     // MARK: - CSUserSessionDelegate
-    
-    func session(_ session: CSSession, changedState newState: CSSessionState) {
-        if newState == .valid {
-            NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: kSessionValidatedNotificationName), object: nil)
-        }
-        print("Session changed state to: \(newState.rawValue)")
-    }
-    
-    func session(_ session: CSUserSession, canNotifyMonitoringSessionUserAt site: CSSite) {
-        print("Session can notify associate at: \(site.siteIdentifier)")
-    }
-    
-    func session(_ session: CSUserSession, userArrivedAt site: CSSite) {
-        guard let trackingIdentifier = CSUserSession.current().trackingIdentifier else { return }
-        statusLabel.text = "\(trackingIdentifier) arrived at site \(site.siteIdentifier)"
         
-        showLocalNotification(title: "Arrival Notificaton!", body: "Arrived at site \(site.siteIdentifier)")
-        
-        // Complete the trip.
-        session.completeTripToSite(withIdentifier: site.siteIdentifier, trackToken: nil)
-    }
-    
-    func session(_ session: CSUserSession, userApproachingSite site: CSSite) {
-        guard let trackingIdentifier = CSUserSession.current().trackingIdentifier else { return }
-        statusLabel.text = "\(trackingIdentifier) approaching at site \(site.siteIdentifier)"
-        
-        showLocalNotification(title: "Approaching Notificaton!", body: "Approaching site \(site.siteIdentifier)")
-    }
-    
-    func session(_ session: CSUserSession, encounteredError error: Error, forOperation customerSessionAction: CSUserSessionAction) {
-        guard let error = (error as NSError?),
-            let userInfo = error.userInfo as? [String : Any] else { return }
-        
-        errorTitleLabel.text = userInfo[NSLocalizedDescriptionKey] as? String
-        errorDescriptionLabel.text = userInfo[NSLocalizedFailureReasonErrorKey] as? String
-        errorSolutionLabel.text = userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String
-    }
-    
-    func session(_ session: CSUserSession, updatedTrackedSites trackedSites: Set<CSSite>) {
-        // We will just show the first one for now. It is in dispatch_async because we are making changes in the UI
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            if trackedSites.isEmpty {
-                strongSelf.isStartTrack = true
-            } else {
-                let site = trackedSites.first!
-                strongSelf.siteIdentierField.text = site.siteIdentifier
-                if let firstTrackToken = site.tripInfos?.first?.trackToken {
-                    strongSelf.trackTokenField.text = firstTrackToken
-                } else {
-                    strongSelf.trackTokenField.text = ""
-                }
-                strongSelf.isStartTrack = false
+        func session(_ session: CSSession, changedState newState: CSSessionState) {
+            if newState == .valid {
+                NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: kSessionValidatedNotificationName), object: nil)
             }
-            strongSelf.updateButtons()
+            print("Session changed state to: \(newState.rawValue)")
         }
-    }
+        
+        func session(_ session: CSUserSession, canNotifyMonitoringSessionUserAt site: CSSite) {
+            print("Session can notify associate at: \(site.siteIdentifier)")
+        }
+        
+        func session(_ session: CSUserSession, userArrivedAt site: CSSite) {
+            guard let trackingIdentifier = CSUserSession.current().trackingIdentifier else { return }
+            statusLabel.text = "\(trackingIdentifier) arrived at site \(site.siteIdentifier)"
+            
+            showLocalNotification(title: "Arrival Notificaton!", body: "Arrived at site \(site.siteIdentifier)")
+            
+            // Complete the trip.
+            session.completeTripToSite(withIdentifier: site.siteIdentifier, trackToken: nil)
+        }
+        
+        func session(_ session: CSUserSession, userApproachingSite site: CSSite) {
+            guard let trackingIdentifier = CSUserSession.current().trackingIdentifier else { return }
+            statusLabel.text = "\(trackingIdentifier) approaching at site \(site.siteIdentifier)"
+            
+            showLocalNotification(title: "Approaching Notificaton!", body: "Approaching site \(site.siteIdentifier)")
+        }
+        
+        func session(_ session: CSUserSession, encounteredError error: Error, forOperation customerSessionAction: CSUserSessionAction) {
+            guard let error = (error as NSError?),
+                let userInfo = error.userInfo as? [String : Any] else { return }
+            
+            errorTitleLabel.text = userInfo[NSLocalizedDescriptionKey] as? String
+            errorDescriptionLabel.text = userInfo[NSLocalizedFailureReasonErrorKey] as? String
+            errorSolutionLabel.text = userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String
+        }
+        
+        func session(_ session: CSUserSession, updatedTrackedSites trackedSites: Set<CSSite>) {
+            // We will just show the first one for now. It is in dispatch_async because we are making changes in the UI
+            DispatchQueue.main.async { [weak self] in
+                guard let strongSelf = self else { return }
+                if trackedSites.isEmpty {
+                    strongSelf.isStartTrack = true
+                } else {
+                    let site = trackedSites.first!
+                    strongSelf.siteIdentierField.text = site.siteIdentifier
+                    if let firstTrackToken = site.tripInfos?.first?.trackToken {
+                        strongSelf.trackTokenField.text = firstTrackToken
+                    } else {
+                        strongSelf.trackTokenField.text = ""
+                    }
+                    strongSelf.isStartTrack = false
+                }
+                strongSelf.updateButtons()
+            }
+        }
 }
+

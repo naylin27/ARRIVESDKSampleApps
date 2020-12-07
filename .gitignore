@@ -1,1 +1,5 @@
 Curbside.framework
+.DS_Store
+build/
+project.xcworkspace/
+*.xcuserdatad/
